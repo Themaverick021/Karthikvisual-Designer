@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://themaverick021.github.io/Karthikvisual-Designer/sitemap.xml
