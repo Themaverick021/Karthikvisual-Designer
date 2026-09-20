@@ -298,9 +298,18 @@
   /* ---------- Marketing Reels (vertical 9:16) ---------- */
   .reel-grid--vertical{
     display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:32px 22px;
+    align-items:start;
   }
   @media(min-width:640px){ .reel-grid--vertical{ grid-template-columns:repeat(3,minmax(0,1fr)); gap:36px 26px; } }
   @media(min-width:1080px){ .reel-grid--vertical{ grid-template-columns:repeat(5,minmax(0,1fr)); gap:36px 28px; } }
+  .reel-grid--vertical .reel-card{ height:100%; }
+  .reel-grid--vertical .reel-meta{
+    align-items:flex-start; min-height:38px; margin-bottom:2px;
+  }
+  .reel-grid--vertical .reel-title{
+    font-size:13px; line-height:1.35; letter-spacing:0;
+  }
+  .reel-grid--vertical .reel-num{ font-size:11px; flex-shrink:0; }
   .reel-embed--vertical{
     position:relative; width:100%; padding-top:177.78%; background:#000;
     overflow:hidden; border:1px solid var(--hair);
@@ -737,14 +746,14 @@
       <div class="reel-card">
         <div class="reel-meta"><span class="reel-num">03</span><span class="reel-title">Santro in Ice Age</span></div>
         <div class="reel-embed--vertical corner-brackets">
-          <iframe src="https://player.vimeo.com/video/1228506853?h=5d7980ec47&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Santro in Ice Age"></iframe>
+          <iframe src="https://player.vimeo.com/video/1228506854?h=bc988b6438&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Santro in Ice Age"></iframe>
         </div>
       </div>
 
       <div class="reel-card">
         <div class="reel-meta"><span class="reel-num">04</span><span class="reel-title">Chained Monster</span></div>
         <div class="reel-embed--vertical corner-brackets">
-          <iframe src="https://player.vimeo.com/video/1228506853?h=5d7980ec47&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Chained Monster"></iframe>
+          <iframe src="https://player.vimeo.com/video/1228506908?h=9c37d094b1&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Chained Monster"></iframe>
         </div>
       </div>
 
