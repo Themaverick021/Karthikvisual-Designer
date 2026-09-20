@@ -1163,7 +1163,7 @@
       const lo = (lon - LON_OFFSET) * Math.PI / 180;
       return {
         x: Math.cos(la) * Math.sin(lo),
-        y: Math.sin(la),
+        y: -Math.sin(la), // canvas y grows downward, so north (+lat) must map to -y
         z: Math.cos(la) * Math.cos(lo)
       };
     }
