@@ -1131,7 +1131,7 @@
     updateParallax();
   }
 
-  // ---------- Futuristic orange dotted globe (canvas) ----------
+  // ---------- Dotted world-map globe (canvas) — coastlines + graticule ----------
   (function(){
     const wrap = document.querySelector('.hero-globe-wrap');
     const canvas = document.getElementById('heroGlobeCanvas');
@@ -1151,19 +1151,133 @@
     window.addEventListener('resize', resize);
     resize();
 
-    // Fibonacci-sphere point distribution for an even dotted globe
-    const NUM_POINTS = 380;
-    const points = [];
-    const golden = Math.PI * (3 - Math.sqrt(5));
-    for (let i = 0; i < NUM_POINTS; i++) {
-      const y = 1 - (i / (NUM_POINTS - 1)) * 2;
-      const rad = Math.sqrt(Math.max(0, 1 - y * y));
-      const theta = golden * i;
-      points.push({ x: Math.cos(theta) * rad, y, z: Math.sin(theta) * rad });
+    // "You are here" — Thirunindravur, Chennai, Tamil Nadu (approx 13.12°N, 80.00°E).
+    // The whole map is rotated so this meridian sits front-and-center at rest.
+    const HOME_LABEL = 'CHENNAI, IN';
+    const HOME_COORDS = '13.12°N 80.00°E';
+    const HOME_LAT = 13.12, HOME_LON = 80.0;
+    const LON_OFFSET = HOME_LON;
+
+    function toXYZ(lat, lon){
+      const la = lat * Math.PI / 180;
+      const lo = (lon - LON_OFFSET) * Math.PI / 180;
+      return {
+        x: Math.cos(la) * Math.sin(lo),
+        y: Math.sin(la),
+        z: Math.cos(la) * Math.cos(lo)
+      };
+    }
+    function rotatePoint(p, cY, sY, cX, sX){
+      const x1 = p.x * cY - p.z * sY;
+      const z1 = p.x * sY + p.z * cY;
+      const y1 = p.y * cX - z1 * sX;
+      const z2 = p.y * sX + z1 * cX;
+      return { x: x1, y: y1, z: z2 };
     }
 
-    let rotY = 0.5, rotX = 0.32;
-    let targetTiltY = 0, targetTiltX = 0.32;
+    // Simplified low-poly continent outlines (approximate coastline vertices, [lat, lon] in degrees).
+    const LANDMASSES = [
+      // North America
+      [[71,-156],[70,-143],[69,-133],[68,-121],[69,-105],[68,-95],[66,-85],[63,-79],[60,-77],[58,-93],
+       [55,-82],[51,-79],[50,-64],[47,-60],[45,-66],[44,-68],[41,-71],[40,-74],[36,-76],[32,-81],
+       [28,-80],[25,-80],[25,-97],[22,-97],[21,-97],[19,-96],[18,-94],[19,-105],[20,-105],[22,-106],
+       [24,-110],[23,-110],[22,-106],[27,-114],[31,-116],[33,-118],[34,-120],[37,-123],[40,-124],
+       [43,-124],[46,-124],[48,-124],[49,-123],[50,-128],[52,-131],[54,-133],[57,-135],[58,-137],
+       [59,-139],[60,-142],[59,-146],[57,-153],[55,-162],[54,-165],[55,-160],[58,-157],[60,-165],
+       [63,-164],[65,-168],[66,-165],[68,-166],[70,-159],[71,-156]],
+      // Greenland
+      [[83,-33],[82,-20],[77,-20],[70,-22],[65,-38],[60,-45],[62,-50],[68,-53],[73,-56],[77,-65],
+       [80,-65],[83,-50],[83,-33]],
+      // South America
+      [[12,-72],[11,-74],[8,-77],[7,-78],[2,-79],[-2,-81],[-4,-81],[-6,-81],[-9,-78],[-14,-76],
+       [-18,-71],[-20,-70],[-23,-70],[-27,-71],[-30,-71],[-33,-72],[-37,-73],[-41,-73],[-45,-74],
+       [-49,-74],[-52,-74],[-54,-72],[-55,-68],[-54,-65],[-52,-68],[-50,-69],[-45,-67],[-41,-63],
+       [-38,-58],[-35,-57],[-34,-58],[-33,-53],[-30,-50],[-23,-43],[-20,-40],[-16,-39],[-13,-38],
+       [-9,-35],[-5,-35],[-2,-44],[0,-50],[2,-50],[4,-52],[5,-53],[8,-59],[8,-60],[10,-61],
+       [10,-64],[11,-66],[12,-70],[12,-72]],
+      // Africa
+      [[37,10],[35,10],[33,11],[33,13],[31,25],[31,32],[27,34],[22,38],[15,41],[12,43],
+       [11,45],[10,50],[5,49],[2,46],[-1,44],[-4,40],[-8,40],[-11,40],[-15,40],[-18,37],
+       [-22,35],[-26,33],[-29,31],[-34,25],[-34,20],[-33,18],[-30,17],[-28,16],[-22,14],
+       [-18,12],[-15,12],[-9,13],[-6,12],[-4,9],[0,9],[4,9],[6,3],[5,-4],[4,-8],
+       [5,-9],[7,-13],[10,-15],[13,-16],[16,-16],[19,-17],[21,-17],[23,-16],[27,-13],
+       [31,-9],[33,-8],[35,-6],[36,-5],[35,0],[37,10]],
+      // Europe
+      [[71,26],[70,29],[68,33],[65,34],[63,32],[60,29],[59,24],[60,20],[58,17],[57,12],
+       [55,12],[54,9],[54,8],[53,7],[51,4],[50,2],[49,-1],[48,-4],[47,-2],[46,-1],
+       [44,-1],[43,-2],[43,-9],[37,-9],[36,-6],[37,-2],[36,3],[38,6],[40,8],[41,9],
+       [43,7],[43,10],[44,13],[41,17],[40,18],[38,16],[40,16],[42,17],[44,15],[45,13],
+       [44,14],[43,16],[42,19],[40,20],[38,22],[37,22],[38,24],[40,26],[41,27],[41,29],
+       [42,34],[45,36],[47,33],[47,32],[49,29],[52,30],[55,38],[57,40],[60,32],[63,25],
+       [65,25],[67,21],[68,15],[69,16],[70,20],[71,26]],
+      // UK & Ireland
+      [[59,-3],[58,-4],[57,-6],[56,-6],[55,-5],[54,-5],[53,-4],[52,-5],[51,-5],[50,-5],
+       [50,-4],[51,0],[52,1],[53,0],[54,0],[55,-1],[57,-2],[58,-3],[59,-3]],
+      // Asia (incl. Middle East, India, China, Russia Far East, SE Asia mainland)
+      [[68,180],[70,170],[72,150],[73,140],[75,110],[77,100],[78,90],[77,80],[75,70],
+       [70,60],[67,55],[60,50],[55,48],[52,48],[47,42],[43,41],[41,40],[37,36],
+       [33,35],[31,34],[29,34],[27,34],[22,37],[18,42],[15,42],[13,44],[12,44],
+       [15,52],[17,56],[20,58],[24,58],[25,56],[25,60],[24,66],[24,68],[22,68],
+       [23,70],[22,72],[21,72],[20,73],[16,73],[13,75],[10,76],[8,77],[8,80],
+       [10,80],[13,80],[16,82],[17,83],[20,86],[22,88],[20,92],[16,94],[13,98],
+       [10,99],[7,100],[6,102],[2,103],[1,104],[0,109],[2,111],[4,114],[6,116],
+       [7,117],[10,119],[13,120],[15,120],[18,122],[22,121],[25,121],[24,122],
+       [26,128],[31,131],[33,130],[35,133],[36,136],[35,139],[36,140],[38,141],
+       [40,141],[41,141],[43,145],[44,146],[46,142],[45,142],[43,132],[45,133],
+       [48,140],[50,140],[52,141],[55,142],[57,153],[60,163],[62,163],[65,171],
+       [66,170],[68,180]],
+      // Japan
+      [[45,142],[43,144],[42,141],[40,141],[38,141],[36,140],[35,139],[34,135],
+       [33,131],[31,131],[33,130],[35,133],[36,136],[38,138],[40,140],[42,140],[43,144],[45,142]],
+      // Australia
+      [[-11,131],[-12,136],[-12,142],[-15,145],[-17,146],[-20,149],[-24,153],
+       [-28,153],[-32,153],[-35,150],[-38,148],[-39,146],[-38,144],[-38,141],
+       [-35,137],[-33,134],[-32,127],[-31,115],[-28,114],[-25,113],[-22,114],
+       [-20,117],[-18,122],[-16,123],[-14,126],[-12,130],[-11,131]],
+      // New Zealand
+      [[-34,173],[-36,175],[-38,178],[-39,177],[-41,175],[-41,174],[-43,173],
+       [-44,171],[-46,169],[-45,167],[-43,171],[-41,174],[-39,174],[-37,175],[-35,174],[-34,173]],
+      // Madagascar
+      [[-12,49],[-15,50],[-16,50],[-20,48],[-22,47],[-25,46],[-25,45],[-23,43],
+       [-20,44],[-17,44],[-15,46],[-13,48],[-12,49]]
+    ];
+
+    // Densify each polyline (linear lat/lon interpolation) so coastlines read as a dotted line.
+    function densify(loop, stepDeg){
+      const out = [];
+      for (let i = 0; i < loop.length - 1; i++) {
+        const [la1, lo1] = loop[i], [la2, lo2] = loop[i + 1];
+        const dist = Math.max(Math.abs(la2 - la1), Math.abs(lo2 - lo1));
+        const steps = Math.max(1, Math.ceil(dist / stepDeg));
+        for (let s = 0; s < steps; s++) {
+          const t = s / steps;
+          out.push([la1 + (la2 - la1) * t, lo1 + (lo2 - lo1) * t]);
+        }
+      }
+      return out;
+    }
+
+    const landPoints = [];
+    LANDMASSES.forEach(loop => {
+      densify(loop, 1.1).forEach(([la, lo]) => landPoints.push(toXYZ(la, lo)));
+    });
+
+    // Latitude/longitude graticule
+    const gridPoints = [];
+    for (let lat = -60; lat <= 60; lat += 30) {
+      for (let lon = 0; lon < 360; lon += 4) gridPoints.push(toXYZ(lat, lon));
+    }
+    for (let lon = 0; lon < 360; lon += 30) {
+      for (let lat = -80; lat <= 80; lat += 4) gridPoints.push(toXYZ(lat, lon));
+    }
+
+    const homePoint = toXYZ(HOME_LAT, HOME_LON);
+
+    // Continuous auto-spin (autoRotY) with a separate mouse-parallax tilt layered on top,
+    // so the globe never settles — it keeps turning even when nobody touches the page.
+    let autoRotY = 0.12;
+    let tiltY = 0, tiltX = 0;
+    let targetTiltY = 0, targetTiltX = 0;
 
     const heroSection = document.querySelector('.hero');
     if (heroSection) {
@@ -1171,8 +1285,8 @@
         const rect = wrap.getBoundingClientRect();
         const mx = (e.clientX - (rect.left + rect.width / 2)) / rect.width;
         const my = (e.clientY - (rect.top + rect.height / 2)) / rect.height;
-        targetTiltY = Math.max(-1, Math.min(1, mx)) * 0.7;
-        targetTiltX = 0.32 + Math.max(-1, Math.min(1, my)) * 0.32;
+        targetTiltY = Math.max(-1, Math.min(1, mx)) * 0.35;
+        targetTiltX = Math.max(-1, Math.min(1, my)) * 0.28;
       });
     }
 
@@ -1182,77 +1296,105 @@
       const cx = W / 2, cy = H / 2;
       const R = Math.min(W, H) * 0.42;
 
-      rotY += (targetTiltY - rotY) * 0.03 + 0.0016;
-      rotX += (targetTiltX - rotX) * 0.03;
+      autoRotY += 0.0022;
+      tiltY += (targetTiltY - tiltY) * 0.04;
+      tiltX += (targetTiltX - tiltX) * 0.04;
+
+      const rotY = autoRotY + tiltY;
+      const rotX = 0.28 + tiltX;
 
       const cY = Math.cos(rotY), sY = Math.sin(rotY);
       const cX = Math.cos(rotX), sX = Math.sin(rotX);
 
-      const proj = points.map(p => {
-        const x1 = p.x * cY - p.z * sY;
-        const z1 = p.x * sY + p.z * cY;
-        const y1 = p.y * cX - z1 * sX;
-        const z2 = p.y * sX + z1 * cX;
-        return { x: x1, y: y1, z: z2 };
-      });
-
-      proj.sort((a, b) => a.z - b.z);
+      const gridProj = gridPoints.map(p => rotatePoint(p, cY, sY, cX, sX));
+      const landProj = landPoints.map(p => rotatePoint(p, cY, sY, cX, sX));
+      const homeProj = rotatePoint(homePoint, cY, sY, cX, sX);
 
       // ambient glow core
       const glow = ctx.createRadialGradient(cx, cy, R * 0.05, cx, cy, R * 1.5);
-      glow.addColorStop(0, 'rgba(226,99,43,0.22)');
+      glow.addColorStop(0, 'rgba(226,99,43,0.18)');
       glow.addColorStop(1, 'rgba(226,99,43,0)');
       ctx.fillStyle = glow;
       ctx.beginPath();
       ctx.arc(cx, cy, R * 1.5, 0, Math.PI * 2);
       ctx.fill();
 
-      // constellation connections between nearby front-facing points
-      const linkDist = R * 0.155;
-      ctx.lineWidth = 0.6;
-      for (let i = 0; i < proj.length; i++) {
-        const a = proj[i];
-        if (a.z < -0.2) continue;
-        for (let j = i + 1; j < proj.length; j++) {
-          const b = proj[j];
-          if (b.z < -0.2) continue;
-          const dx = (a.x - b.x) * R, dy = (a.y - b.y) * R;
-          const d = Math.sqrt(dx * dx + dy * dy);
-          if (d < linkDist) {
-            const depth = ((a.z + b.z) / 2 + 1) / 2;
-            const alpha = (1 - d / linkDist) * 0.22 * depth;
-            if (alpha > 0.012) {
-              ctx.strokeStyle = `rgba(226,99,43,${alpha})`;
-              ctx.beginPath();
-              ctx.moveTo(cx + a.x * R, cy + a.y * R);
-              ctx.lineTo(cx + b.x * R, cy + b.y * R);
-              ctx.stroke();
-            }
-          }
-        }
-      }
+      // faint sphere silhouette so the far side of the globe reads as a solid body
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(226,99,43,0.035)';
+      ctx.arc(cx, cy, R, 0, Math.PI * 2);
+      ctx.fill();
 
-      // dotted globe points, depth-shaded with a soft glow
-      proj.forEach(p => {
+      // graticule dots (dimmer, behind the coastlines)
+      gridProj.forEach(p => {
         const depth = (p.z + 1) / 2;
-        const size = 0.5 + depth * 2.1;
-        const alpha = 0.12 + depth * 0.82;
-        const tone = depth > 0.6 ? '242,163,95' : '226,99,43';
+        if (depth < 0.42) return;
+        const alpha = (depth - 0.42) * 0.55;
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(226,99,43,${alpha})`;
+        ctx.arc(cx + p.x * R, cy + p.y * R, 0.55, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // coastline dots, depth-shaded with a soft glow
+      landProj.sort((a, b) => a.z - b.z);
+      landProj.forEach(p => {
+        const depth = (p.z + 1) / 2;
+        const size = 0.7 + depth * 1.5;
+        const alpha = 0.16 + depth * 0.78;
+        const tone = depth > 0.62 ? '255,214,178' : '242,163,95';
         ctx.beginPath();
         ctx.fillStyle = `rgba(${tone},${alpha})`;
-        ctx.shadowColor = 'rgba(226,99,43,0.9)';
-        ctx.shadowBlur = depth * 7;
+        ctx.shadowColor = 'rgba(226,99,43,0.85)';
+        ctx.shadowBlur = depth * 4.5;
         ctx.arc(cx + p.x * R, cy + p.y * R, size, 0, Math.PI * 2);
         ctx.fill();
       });
       ctx.shadowBlur = 0;
 
-      // thin equatorial ring for extra HUD polish
-      ctx.strokeStyle = 'rgba(226,99,43,0.22)';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.ellipse(cx, cy, R * 1.03, Math.max(2, R * 1.03 * Math.abs(cX) * 0.35), 0, 0, Math.PI * 2);
-      ctx.stroke();
+      // "you are here" beacon — pulses and labels itself as it rotates into view
+      {
+        const depth = (homeProj.z + 1) / 2;
+        const mx = cx + homeProj.x * R, my = cy + homeProj.y * R;
+        if (homeProj.z > -0.5) {
+          const pulse = (Math.sin(Date.now() * 0.0028) + 1) / 2;
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(239,65,54,${0.5 * depth * (1 - pulse * 0.55)})`;
+          ctx.lineWidth = 1.3;
+          ctx.arc(mx, my, 4 + pulse * 10, 0, Math.PI * 2);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(239,65,54,${0.5 + depth * 0.5})`;
+          ctx.shadowColor = 'rgba(239,65,54,0.95)';
+          ctx.shadowBlur = 9;
+          ctx.arc(mx, my, 3, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+
+          const labelAlpha = Math.max(0, Math.min(1, (homeProj.z + 0.05) / 0.6));
+          if (labelAlpha > 0.02) {
+            const lx = mx + 24, ly = my - 20;
+            ctx.strokeStyle = `rgba(239,65,54,${0.55 * labelAlpha})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(mx, my);
+            ctx.lineTo(mx + 13, my - 11);
+            ctx.lineTo(lx, ly);
+            ctx.stroke();
+
+            ctx.textBaseline = 'bottom';
+            ctx.font = "600 10px 'JetBrains Mono', monospace";
+            ctx.fillStyle = `rgba(255,244,232,${0.92 * labelAlpha})`;
+            ctx.fillText(HOME_LABEL, lx + 4, ly - 1);
+
+            ctx.textBaseline = 'top';
+            ctx.font = "9px 'JetBrains Mono', monospace";
+            ctx.fillStyle = `rgba(226,99,43,${0.85 * labelAlpha})`;
+            ctx.fillText(HOME_COORDS, lx + 4, ly + 2);
+          }
+        }
+      }
     }
 
     function loop(){
