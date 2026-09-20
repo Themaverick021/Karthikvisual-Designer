@@ -295,6 +295,18 @@
   }
   .reel-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
 
+  /* ---------- Marketing Reels (vertical 9:16) ---------- */
+  .reel-grid--vertical{
+    display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:32px 22px;
+  }
+  @media(min-width:640px){ .reel-grid--vertical{ grid-template-columns:repeat(3,minmax(0,1fr)); gap:36px 26px; } }
+  @media(min-width:1080px){ .reel-grid--vertical{ grid-template-columns:repeat(5,minmax(0,1fr)); gap:36px 28px; } }
+  .reel-embed--vertical{
+    position:relative; width:100%; padding-top:177.78%; background:#000;
+    overflow:hidden; border:1px solid var(--hair);
+  }
+  .reel-embed--vertical iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
+
   /* ---------- Signature reveal video (full-bleed, above footer) ---------- */
   .signature-reel{
     position:relative;
@@ -533,6 +545,7 @@
   <a href="#skills" data-label="Skills"></a>
   <a href="#tools" data-label="Tools"></a>
   <a href="#showreel" data-label="Reel"></a>
+  <a href="#marketing-reels" data-label="Reels 9:16"></a>
   <a href="#work" data-label="Timeline"></a>
   <a href="#edu" data-label="Education"></a>
   <a href="#achievements" data-label="Numbers"></a>
@@ -550,6 +563,7 @@
     </div>
     <nav>
       <a href="#showreel">Reel</a>
+      <a href="#marketing-reels">Reels</a>
       <a href="#edu">Education</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -698,37 +712,45 @@
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <section id="marketing-reels">
+    <div class="kicker mono"><span class="num">04</span> — Vertical Cuts</div>
+    <h2 class="sec-title reveal">Marketing reels</h2>
+    <div class="reel-grid--vertical reveal">
+
       <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">09</span><span class="reel-title">Snake with King Ring — Miso by Sonia</span></div>
-        <div class="reel-embed corner-brackets">
+        <div class="reel-meta"><span class="reel-num">01</span><span class="reel-title">Snake with King Ring — Miso by Sonia</span></div>
+        <div class="reel-embed--vertical corner-brackets">
           <iframe src="https://player.vimeo.com/video/1228506852?h=64dccc41ed&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Snake with king ring for Miso by sonia"></iframe>
         </div>
       </div>
 
       <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">10</span><span class="reel-title">Black Panther with Neck Chain — Miso by Sonia</span></div>
-        <div class="reel-embed corner-brackets">
+        <div class="reel-meta"><span class="reel-num">02</span><span class="reel-title">Black Panther with Neck Chain — Miso by Sonia</span></div>
+        <div class="reel-embed--vertical corner-brackets">
           <iframe src="https://player.vimeo.com/video/1228506853?h=5d7980ec47&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Black panther with neck chain Miso by sonia"></iframe>
         </div>
       </div>
 
       <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">11</span><span class="reel-title">Santro in Ice Age</span></div>
-        <div class="reel-embed corner-brackets">
+        <div class="reel-meta"><span class="reel-num">03</span><span class="reel-title">Santro in Ice Age</span></div>
+        <div class="reel-embed--vertical corner-brackets">
           <iframe src="https://player.vimeo.com/video/1228506853?h=5d7980ec47&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Santro in Ice Age"></iframe>
         </div>
       </div>
 
       <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">12</span><span class="reel-title">Chained Monster</span></div>
-        <div class="reel-embed corner-brackets">
+        <div class="reel-meta"><span class="reel-num">04</span><span class="reel-title">Chained Monster</span></div>
+        <div class="reel-embed--vertical corner-brackets">
           <iframe src="https://player.vimeo.com/video/1228506853?h=5d7980ec47&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Chained Monster"></iframe>
         </div>
       </div>
 
       <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">13</span><span class="reel-title">Floating Boat Citroen</span></div>
-        <div class="reel-embed corner-brackets">
+        <div class="reel-meta"><span class="reel-num">05</span><span class="reel-title">Floating Boat Citroen</span></div>
+        <div class="reel-embed--vertical corner-brackets">
           <iframe src="https://player.vimeo.com/video/1228506851?h=0e34a5f5a4&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Floating Boat Citroen"></iframe>
         </div>
       </div>
@@ -738,7 +760,7 @@
 
   <!-- EXPERIENCE / TIMELINE -->
   <section id="work">
-    <div class="kicker mono"><span class="num">04</span> — Career Timeline</div>
+    <div class="kicker mono"><span class="num">05</span> — Career Timeline</div>
     <h2 class="sec-title reveal">The reel so far</h2>
 
     <div class="timeline reveal" id="timeline">
@@ -808,7 +830,7 @@
 
   <!-- EDUCATION -->
   <section id="edu">
-    <div class="kicker mono"><span class="num">05</span> — Credits</div>
+    <div class="kicker mono"><span class="num">06</span> — Credits</div>
     <h2 class="sec-title reveal">Education &amp; certifications</h2>
     <div class="credits reveal">
       <div class="credit-row">
@@ -836,7 +858,7 @@
 
   <!-- ACHIEVEMENTS -->
   <section id="achievements">
-    <div class="kicker mono"><span class="num">06</span> — Highlight Reel</div>
+    <div class="kicker mono"><span class="num">07</span> — Highlight Reel</div>
     <h2 class="sec-title reveal">By the numbers</h2>
     <div class="stats reveal">
       <div class="stat"><div class="num">4+</div><div class="lbl">Years Experience</div></div>
@@ -848,7 +870,7 @@
 
   <!-- SELECTED WORK -->
   <section id="portfolio">
-    <div class="kicker mono"><span class="num">07</span> — Watch More</div>
+    <div class="kicker mono"><span class="num">08</span> — Watch More</div>
     <h2 class="sec-title reveal">Selected work</h2>
     <div class="case-grid reveal">
       <a class="case-card" href="https://visualmaverick.framer.ai" target="_blank" rel="noopener">
