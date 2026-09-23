@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A. Karthik Balaji — Visual Designer &amp; Video Editor</title>
-<meta name="description" content="Resume of A. Karthik Balaji — Visual Designer, Video Editor, Content Creator & DGCA Drone Pilot.">
+<meta name="description" content="A. Karthik Balaji — Visual Designer, Video Editor and AI Creative. Senior Visual Editor at GuruSetu, IIT Madras Nodal Centre. Portfolio of CGI, VFX, motion, design and video work.">
 
 <!-- Google Search Console site verification -->
 <meta name="google-site-verification" content="4ec8d810d8d9b943">
@@ -549,6 +549,148 @@
   @media (prefers-reduced-motion: reduce){
     *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important;}
   }
+
+/* ===== 2026 PORTFOLIO POLISH ===== */
+:root{
+  --portfolio-max: 1380px;
+}
+.section-lead{
+  max-width: 760px;
+  margin: -24px 0 42px;
+  color: rgba(255,244,232,.68);
+  font-size: clamp(15px,1.35vw,19px);
+  line-height: 1.7;
+}
+.hero-proof{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin: 20px 0 4px;
+  color:rgba(255,244,232,.72);
+  font-size:13px;
+}
+.hero-proof strong{color:#fff4e8}
+.proof-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:#ef4136;
+  box-shadow:0 0 16px rgba(239,65,54,.75);
+  flex:0 0 auto;
+}
+.capability-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+}
+.cap-card{
+  position:relative;
+  min-height:270px;
+  padding:28px;
+  border:1px solid rgba(255,244,232,.11);
+  background:linear-gradient(145deg,rgba(255,244,232,.045),rgba(255,244,232,.012));
+  overflow:hidden;
+  transition:transform .35s ease,border-color .35s ease,background .35s ease;
+}
+.cap-card:hover{
+  transform:translateY(-7px);
+  border-color:rgba(226,99,43,.5);
+  background:linear-gradient(145deg,rgba(226,99,43,.10),rgba(255,244,232,.018));
+}
+.cap-index{
+  display:block;
+  margin-bottom:42px;
+  color:#e2632b;
+  font:600 11px/1 'JetBrains Mono',monospace;
+}
+.cap-card h3{
+  margin:0 0 12px;
+  font-size:clamp(24px,2vw,34px);
+  letter-spacing:-.04em;
+}
+.cap-card p{
+  margin:0;
+  color:rgba(255,244,232,.62);
+  line-height:1.65;
+  font-size:14px;
+}
+.cap-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:24px;
+}
+.cap-tags span{
+  border:1px solid rgba(255,244,232,.12);
+  padding:6px 9px;
+  color:rgba(255,244,232,.55);
+  font:10px 'JetBrains Mono',monospace;
+  text-transform:uppercase;
+}
+.reel-feature{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:30px;
+  padding:28px 0 34px;
+  margin-bottom:10px;
+  border-top:1px solid rgba(255,244,232,.1);
+  border-bottom:1px solid rgba(255,244,232,.1);
+}
+.feature-kicker{
+  color:#e2632b;
+  font-size:10px;
+  letter-spacing:.14em;
+}
+.reel-feature h3{
+  margin:10px 0 8px;
+  font-size:clamp(28px,4vw,54px);
+  line-height:.98;
+  letter-spacing:-.05em;
+}
+.reel-feature p{
+  max-width:650px;
+  margin:0;
+  color:rgba(255,244,232,.6);
+  line-height:1.65;
+}
+.reel-card-featured{
+  grid-column:span 2;
+}
+.job.live{
+  border-color:rgba(226,99,43,.34);
+  background:linear-gradient(90deg,rgba(226,99,43,.07),transparent);
+}
+.contact-hero{
+  padding:110px 0 80px;
+  border-top:1px solid rgba(255,244,232,.1);
+  border-bottom:1px solid rgba(255,244,232,.1);
+  background:
+    radial-gradient(circle at 85% 30%,rgba(226,99,43,.12),transparent 32%),
+    radial-gradient(circle at 15% 70%,rgba(239,65,54,.07),transparent 28%);
+}
+.contact-title{
+  margin:18px 0 22px;
+  font-size:clamp(56px,9vw,140px);
+  line-height:.86;
+  letter-spacing:-.07em;
+}
+.contact-title span{color:#e2632b}
+.case-card{
+  min-height:240px;
+}
+@media (max-width: 980px){
+  .capability-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .reel-card-featured{grid-column:span 1}
+}
+@media (max-width: 640px){
+  .capability-grid{grid-template-columns:1fr}
+  .cap-card{min-height:220px}
+  .reel-feature{display:block}
+  .reel-feature .btn{margin-top:22px}
+  .hero-proof{align-items:flex-start}
+  .hero-proof span:last-child{line-height:1.45}
+  .contact-hero{padding:80px 0 60px}
+}
+
 </style>
 </head>
 <body>
@@ -637,12 +779,35 @@
     <div class="marquee-track" id="marqueeTrack"></div>
   </div>
 
-  <!-- SKILLS -->
+  <!-- CAPABILITIES -->
   <section id="skills">
-    <div class="kicker mono"><span class="num">01</span> — Skill Levels</div>
-    <h2 class="sec-title reveal">On the meter</h2>
-    <div class="meter-grid" id="meterGrid">
-      <!-- meters injected by JS -->
+    <div class="kicker mono"><span class="num">01</span> — Capabilities</div>
+    <h2 class="sec-title reveal">What I create</h2>
+    <div class="capability-grid reveal">
+      <article class="cap-card">
+        <span class="cap-index">01</span>
+        <h3>Design</h3>
+        <p>Graphic design, branding, UI/UX, campaign creatives and visual systems.</p>
+        <div class="cap-tags"><span>Branding</span><span>UI/UX</span><span>Campaigns</span></div>
+      </article>
+      <article class="cap-card">
+        <span class="cap-index">02</span>
+        <h3>Motion &amp; Video</h3>
+        <p>Editing, motion graphics, storytelling, VFX and social-first video content.</p>
+        <div class="cap-tags"><span>Editing</span><span>Motion</span><span>VFX</span></div>
+      </article>
+      <article class="cap-card">
+        <span class="cap-index">03</span>
+        <h3>CGI &amp; AI Creative</h3>
+        <p>Product visualization, CGI advertising and AI-assisted image and video creation.</p>
+        <div class="cap-tags"><span>CGI</span><span>AI Video</span><span>Generative Visuals</span></div>
+      </article>
+      <article class="cap-card">
+        <span class="cap-index">04</span>
+        <h3>Production</h3>
+        <p>Camera operation, product shoots, studio production and aerial cinematography.</p>
+        <div class="cap-tags"><span>Production</span><span>Photography</span><span>Drone</span></div>
+      </article>
     </div>
   </section>
 
@@ -676,10 +841,19 @@
   <!-- VIDEO REEL -->
   <section id="showreel">
     <div class="kicker mono"><span class="num">03</span> — Watch The Work</div>
-    <h2 class="sec-title reveal">Selected films</h2>
+    <h2 class="sec-title reveal">Watch the work</h2>
+    <p class="section-lead reveal">A selection of CGI advertising, brand films, motion work and visual storytelling. Start with the strongest frames, then explore the full reel.</p>
+    <div class="reel-feature reveal">
+      <div>
+        <span class="feature-kicker mono">FEATURED REEL · 2026</span>
+        <h3>Visual stories built for attention.</h3>
+        <p>CGI, editing, VFX, motion and production — crafted to turn ideas into visual experiences.</p>
+      </div>
+      <a class="btn primary" href="https://visualmaverick.framer.ai" target="_blank" rel="noopener">Open full portfolio ↗</a>
+    </div>
     <div class="reel-grid reveal">
 
-      <div class="reel-card">
+      <div class="reel-card reel-card-featured">
         <div class="reel-meta"><span class="reel-num">01</span><span class="reel-title">Nike CGI Ads</span></div>
         <div class="reel-embed corner-brackets">
           <iframe src="https://player.vimeo.com/video/1106154410?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="NIKE CGI ADS"></iframe>
@@ -908,12 +1082,12 @@
       <div class="job">
         <div class="job-marker"></div>
         <div class="job-top">
-          <span class="job-role">Aspiring Digital Marketer — Personal Branding</span>
+          <span class="job-role">Independent Creative &amp; Digital Marketing</span>
           <span class="job-time">SEP 2024 — ONGOING</span>
         </div>
-        <div class="job-org">Self-Directed Learning &amp; Practical Projects</div>
+        <div class="job-org">Independent Projects &amp; Personal Branding</div>
         <ul>
-          <li>Actively building expertise in digital marketing and AI-powered creative tools.</li>
+          <li>Developing digital campaigns, AI-assisted creative workflows and personal-brand content.</li>
           <li>Creating video ads, reels, posters and CGI creatives for digital platforms.</li>
           <li>Applying graphic design, video editing and motion graphics to marketing content.</li>
           <li>Practicing social strategy, content planning and engagement optimization.</li>
@@ -987,8 +1161,8 @@
     <div class="stats reveal">
       <div class="stat"><div class="num">4+</div><div class="lbl">Years Experience</div></div>
       <div class="stat"><div class="num">10+</div><div class="lbl">Product Shoots</div></div>
-      <div class="stat"><div class="num">3+</div><div class="lbl">Brand Shoots</div></div>
-      <div class="stat"><div class="num">4</div><div class="lbl">Languages</div></div>
+      <div class="stat"><div class="num">3+</div><div class="lbl">Brand Productions</div></div>
+      <div class="stat"><div class="num">01</div><div class="lbl">IIT Madras Role</div></div>
     </div>
   </section>
 
@@ -996,6 +1170,7 @@
   <section id="portfolio">
     <div class="kicker mono"><span class="num">11</span> — Watch More</div>
     <h2 class="sec-title reveal">Selected work</h2>
+    <p class="section-lead reveal">Go deeper into the portfolio, agency work and design case studies.</p>
     <div class="case-grid reveal">
       <a class="case-card" href="https://visualmaverick.framer.ai" target="_blank" rel="noopener">
         <span class="case-num">01</span>
@@ -1031,6 +1206,17 @@
 </div>
 
 <footer id="contact">
+  <div class="contact-hero">
+    <div class="wrap">
+      <div class="kicker mono">FINAL FRAME · LET'S CREATE</div>
+      <h2 class="contact-title reveal">Have an idea?<br><span>Let's make it visual.</span></h2>
+      <p class="section-lead reveal">Available for visual design, video editing, CGI, motion, AI creative and production opportunities.</p>
+      <div class="cta-row reveal">
+        <a class="btn primary" href="mailto:Karthikbalaji7869@gmail.com">Email me</a>
+        <a class="btn" href="tel:+917299619671">Call me</a>
+      </div>
+    </div>
+  </div>
   <div class="wrap">
     <div class="callsheet reveal">
       <div class="callsheet-grid">
