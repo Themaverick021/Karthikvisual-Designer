@@ -510,6 +510,32 @@
   .credit-org{color:var(--ink-dim);font-size:13.5px;grid-column:1;}
   .credit-time{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-faint);text-align:right;}
 
+  /* ---------- Gear grid ---------- */
+  .gear-grid{
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;
+  }
+  .gear-card{
+    padding:26px 24px;border:1px solid rgba(255,244,232,.11);
+    background:linear-gradient(145deg,rgba(255,244,232,.045),rgba(255,244,232,.012));
+    transition:transform .35s ease,border-color .35s ease,background .35s ease;
+  }
+  .gear-card:hover{
+    transform:translateY(-6px);border-color:rgba(226,99,43,.5);
+    background:linear-gradient(145deg,rgba(226,99,43,.10),rgba(255,244,232,.018));
+  }
+  .gear-cat{
+    display:block;margin-bottom:14px;color:#e2632b;
+    font:600 11px/1 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.08em;
+  }
+  .gear-list{margin:0;padding:0;list-style:none;}
+  .gear-list li{
+    padding:9px 0;border-bottom:1px solid var(--hair-soft);
+    font-size:14.5px;color:rgba(255,244,232,.78);
+  }
+  .gear-list li:last-child{border-bottom:none;}
+  @media(max-width:980px){.gear-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+  @media(max-width:640px){.gear-grid{grid-template-columns:1fr;}}
+
   /* ---------- Stat strip ---------- */
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);}
   @media(max-width:680px){.stats{grid-template-columns:repeat(2,1fr);}}
@@ -881,9 +907,68 @@
     </div>
   </section>
 
+  <!-- PROFESSIONAL GEAR -->
+  <section id="gear">
+    <div class="kicker mono"><span class="num">03</span> — Gear Bag</div>
+    <h2 class="sec-title reveal">Professional gear</h2>
+    <p class="section-lead reveal">The cameras, glass and rigs I personally shoot, fly and edit with.</p>
+    <div class="gear-grid reveal">
+      <div class="gear-card">
+        <span class="gear-cat">Camera</span>
+        <ul class="gear-list">
+          <li>Sony Alpha A7 M III</li>
+          <li>Canon 5D Mark III</li>
+          <li>Canon 90D</li>
+          <li>DJI Osmo Pocket 3</li>
+        </ul>
+      </div>
+      <div class="gear-card">
+        <span class="gear-cat">Lens</span>
+        <ul class="gear-list">
+          <li>Canon 24 – 105mm</li>
+          <li>Canon 50mm</li>
+          <li>Canon 18 – 135mm</li>
+          <li>Canon 24mm</li>
+          <li>Canon 70 – 200mm</li>
+          <li>Tamron 70 – 300mm</li>
+          <li>TT Artisans 85mm</li>
+        </ul>
+      </div>
+      <div class="gear-card">
+        <span class="gear-cat">Gimbal</span>
+        <ul class="gear-list">
+          <li>DJI Ronin RSC</li>
+          <li>Feiyu Scorp 2</li>
+        </ul>
+      </div>
+      <div class="gear-card">
+        <span class="gear-cat">Drone</span>
+        <ul class="gear-list">
+          <li>DJI Mini 2 SE</li>
+        </ul>
+      </div>
+      <div class="gear-card">
+        <span class="gear-cat">Mics</span>
+        <ul class="gear-list">
+          <li>Digitek Wireless Mics</li>
+        </ul>
+      </div>
+      <div class="gear-card">
+        <span class="gear-cat">Editing Gear</span>
+        <ul class="gear-list">
+          <li>Alienware M15 R2</li>
+          <li>Mac mini — M2 chip</li>
+          <li>Mac mini — M4 chip</li>
+          <li>MacBook Air — M5 chip</li>
+          <li>iPad Pro — M2 chip</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <!-- VIDEO REEL -->
   <section id="showreel">
-    <div class="kicker mono"><span class="num">03</span> — Watch The Work</div>
+    <div class="kicker mono"><span class="num">04</span> — Watch The Work</div>
     <h2 class="sec-title reveal">Watch the work</h2>
     <p class="section-lead reveal">A selection of CGI advertising, brand films, motion work and visual storytelling. Start with the strongest frames, then explore the full reel.</p>
     <div class="reel-feature reveal">
@@ -956,7 +1041,7 @@
   </section>
 
   <section id="marketing-reels">
-    <div class="kicker mono"><span class="num">04</span> — Vertical Cuts</div>
+    <div class="kicker mono"><span class="num">05</span> — Vertical Cuts</div>
     <h2 class="sec-title reveal">Marketing reels</h2>
     <div class="reel-grid--vertical reveal">
 
@@ -1020,7 +1105,7 @@
   </section>
 
   <section id="motion-graphics">
-    <div class="kicker mono"><span class="num">05</span> — In Motion</div>
+    <div class="kicker mono"><span class="num">06</span> — In Motion</div>
     <h2 class="sec-title reveal">Motion graphics</h2>
     <div class="reel-grid reveal">
 
@@ -1042,7 +1127,7 @@
   </section>
 
   <section id="design">
-    <div class="kicker mono"><span class="num">06</span> — Brand &amp; Identity</div>
+    <div class="kicker mono"><span class="num">07</span> — Brand &amp; Identity</div>
     <h2 class="sec-title reveal">Design</h2>
     <div class="behance-grid reveal">
 
@@ -1064,7 +1149,7 @@
   </section>
 
   <section id="brand-photoshoots">
-    <div class="kicker mono"><span class="num">07</span> — On Set</div>
+    <div class="kicker mono"><span class="num">08</span> — On Set</div>
     <h2 class="sec-title reveal">Brand photoshoots</h2>
     <div class="behance-grid reveal">
 
@@ -1101,7 +1186,7 @@
 
   <!-- EXPERIENCE / TIMELINE -->
   <section id="work">
-    <div class="kicker mono"><span class="num">08</span> — Career Timeline</div>
+    <div class="kicker mono"><span class="num">09</span> — Career Timeline</div>
     <h2 class="sec-title reveal">The reel so far</h2>
 
     <div class="timeline reveal" id="timeline">
@@ -1170,7 +1255,7 @@
   </section>
 
   <section id="accomplishments">
-    <div class="kicker mono"><span class="num">09</span> — Highlights</div>
+    <div class="kicker mono"><span class="num">10</span> — Highlights</div>
     <h2 class="sec-title reveal">Key accomplishments</h2>
     <div class="accomplishment-grid reveal">
 
@@ -1231,7 +1316,7 @@
 
   <!-- EDUCATION -->
   <section id="edu">
-    <div class="kicker mono"><span class="num">10</span> — Credits</div>
+    <div class="kicker mono"><span class="num">11</span> — Credits</div>
     <h2 class="sec-title reveal">Education &amp; certifications</h2>
     <div class="credits reveal">
       <div class="credit-row">
@@ -1259,7 +1344,7 @@
 
   <!-- ACHIEVEMENTS -->
   <section id="achievements">
-    <div class="kicker mono"><span class="num">11</span> — Highlight Reel</div>
+    <div class="kicker mono"><span class="num">12</span> — Highlight Reel</div>
     <h2 class="sec-title reveal">By the numbers</h2>
     <div class="stats reveal">
       <div class="stat"><div class="num">4+</div><div class="lbl">Years Experience</div></div>
@@ -1271,7 +1356,7 @@
 
   <!-- SELECTED WORK -->
   <section id="portfolio">
-    <div class="kicker mono"><span class="num">12</span> — Watch More</div>
+    <div class="kicker mono"><span class="num">13</span> — Watch More</div>
     <h2 class="sec-title reveal">Selected work</h2>
     <p class="section-lead reveal">Go deeper into the portfolio, agency work and design case studies.</p>
     <div class="case-grid reveal">
