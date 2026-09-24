@@ -1748,9 +1748,30 @@
       }
     }
 
+    // Only animate while the globe is actually on screen and the tab is active —
+    // otherwise this canvas redraws at 60fps forever in the background.
+    let globeVisible = true;
+    let rafId = null;
+    const globeIO = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { globeVisible = entry.isIntersecting; });
+      if (globeVisible && document.visibilityState === 'visible' && rafId === null) {
+        rafId = requestAnimationFrame(loop);
+      }
+    }, { threshold: 0.01 });
+    globeIO.observe(wrap);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && globeVisible && rafId === null) {
+        rafId = requestAnimationFrame(loop);
+      }
+    });
+
     function loop(){
       frame();
-      if (!reduceMotion) requestAnimationFrame(loop);
+      if (!reduceMotion && globeVisible && document.visibilityState === 'visible') {
+        rafId = requestAnimationFrame(loop);
+      } else {
+        rafId = null;
+      }
     }
     if (reduceMotion) {
       frame();
