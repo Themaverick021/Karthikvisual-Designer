@@ -43,7 +43,7 @@
     --ink-faint:#6f6a60;
     --amber:#e2632b;
     --amber-soft:#e2632b33;
-    --rec:#ef4136;
+    --rec:#27d36a;
     --safe:#5c8a6a;
     --radius:2px;
     --maxw:1040px;
@@ -110,11 +110,11 @@
   }
   .rec{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--ink-dim);}
   .rec-dot{width:8px;height:8px;border-radius:50%;background:var(--rec);
-    box-shadow:0 0 0 0 rgba(239,65,54,.6);animation:pulse 1.8s infinite;}
+    box-shadow:0 0 0 0 rgba(39,211,106,.6);animation:pulse 1.8s infinite;}
   @keyframes pulse{
-    0%{box-shadow:0 0 0 0 rgba(239,65,54,.55);}
-    70%{box-shadow:0 0 0 8px rgba(239,65,54,0);}
-    100%{box-shadow:0 0 0 0 rgba(239,65,54,0);}
+    0%{box-shadow:0 0 0 0 rgba(39,211,106,.55);}
+    70%{box-shadow:0 0 0 8px rgba(39,211,106,0);}
+    100%{box-shadow:0 0 0 0 rgba(39,211,106,0);}
   }
   .topstrip nav{display:flex;gap:22px;font-size:11px;color:var(--ink-dim);}
   .topstrip nav a{text-decoration:none;transition:color .2s;}
@@ -330,6 +330,59 @@
   .reel-grid--motion .reel-title{ font-size:13px; line-height:1.35; letter-spacing:0; }
   .reel-grid--motion .reel-num{ font-size:11px; flex-shrink:0; }
   .reel-embed--vertical video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; background:#000; }
+
+
+  /* ---------- 3D rotating video carousel ---------- */
+  .m3d{ --cw:clamp(190px,24vw,270px); position:relative; padding:8px 0 4px; user-select:none; -webkit-user-select:none; }
+  .m3d-stage{ position:relative; height:calc(var(--cw)*16/9 + 84px); perspective:1500px; perspective-origin:50% 40%; touch-action:pan-y; cursor:grab; }
+  .m3d-stage.drag{ cursor:grabbing; }
+  .m3d-card{
+    position:absolute; left:50%; top:0; width:var(--cw); margin-left:calc(var(--cw)/-2);
+    transform-style:preserve-3d; will-change:transform,opacity;
+    transition:transform .75s cubic-bezier(.2,.8,.2,1), opacity .6s ease, filter .6s ease;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .m3d-card:not(.is-active){ cursor:pointer; filter:brightness(.5) saturate(.8); }
+  .m3d-card:not(.is-active) .m3d-vid video, .m3d-card:not(.is-active) .m3d-vid iframe{ pointer-events:none; }
+  .m3d-vid iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; display:block; background:#000; }
+  .m3d-card.is-active .m3d-vid{ box-shadow:0 30px 70px -20px rgba(226,99,43,.45), 0 0 0 1px rgba(226,99,43,.55); }
+  .m3d-num{ font-size:11px; color:var(--amber); letter-spacing:.14em; }
+  .m3d-title{
+    font-family:'Big Shoulders Display',sans-serif; font-weight:800; text-transform:uppercase;
+    font-size:15px; line-height:1.25; color:var(--ink); margin:0; min-height:38px;
+  }
+  .m3d-vid{ position:relative; width:100%; aspect-ratio:9/16; background:#000; overflow:hidden; border:1px solid var(--hair); transition:box-shadow .6s ease; }
+  .m3d-vid video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; background:#000; }
+  .m3d-floor{
+    position:absolute; left:50%; bottom:64px; width:min(760px,90%); height:90px; transform:translateX(-50%);
+    background:radial-gradient(ellipse at center, rgba(226,99,43,.28), transparent 70%); filter:blur(14px); pointer-events:none;
+  }
+  .m3d-ui{ display:flex; align-items:center; justify-content:center; gap:18px; margin-top:6px; position:relative; z-index:2; }
+  .m3d-btn{
+    width:44px; height:44px; border-radius:50%; border:1px solid var(--hair); background:transparent; color:var(--ink);
+    font-size:18px; cursor:pointer; transition:background .25s, border-color .25s, transform .25s;
+  }
+  .m3d-btn:hover{ background:var(--amber); border-color:var(--amber); transform:scale(1.08); }
+  .m3d-dots{ display:flex; gap:8px; }
+  .m3d-dot{ width:8px; height:8px; border-radius:99px; border:0; padding:0; background:var(--hair); cursor:pointer; transition:width .35s, background .35s; }
+  .m3d-dot.on{ width:28px; background:var(--amber); }
+  .m3d-hint{ text-align:center; margin:14px 0 0; font-size:11px; letter-spacing:.1em; color:var(--mute,#8a8a8a); opacity:.8; }
+  #marketing-reels .m3d{ --cw:clamp(200px,25vw,290px); }
+  @media(max-width:560px){ .m3d, #marketing-reels .m3d{ --cw:clamp(170px,52vw,230px); } .m3d-hint{ font-size:10px; } }
+
+  /* ---------- Extra motion polish ---------- */
+  .scroll-bar{ position:fixed; top:0; left:0; height:3px; width:100%; z-index:1000; transform-origin:0 50%; transform:scaleX(0); background:linear-gradient(90deg,var(--amber),#ffb36b); pointer-events:none; }
+  .cursor-glow{ position:fixed; left:0; top:0; width:420px; height:420px; margin:-210px 0 0 -210px; border-radius:50%; pointer-events:none; z-index:0;
+    background:radial-gradient(circle, rgba(226,99,43,.13), transparent 65%); opacity:0; transition:opacity .4s; will-change:transform; }
+  .cursor-glow.on{ opacity:1; }
+  .sec-title.reveal{ clip-path:inset(-12% 100% -12% 0); transform:translateX(-18px); transition:clip-path .95s cubic-bezier(.2,.8,.2,1), opacity .6s ease, transform .95s cubic-bezier(.2,.8,.2,1); }
+  .sec-title.reveal.in{ clip-path:inset(-12% 0 -12% 0); transform:none; }
+  .kicker .num{ display:inline-block; transition:transform .5s cubic-bezier(.2,.8,.2,1); }
+  .kicker:hover .num{ transform:translateX(6px); }
+  [data-tilt]{ transition:transform .25s ease-out, box-shadow .3s; will-change:transform; }
+  @media (prefers-reduced-motion: reduce){
+    .m3d-card{ transition:none; } .sec-title.reveal{ clip-path:none; transform:none; } .cursor-glow,.scroll-bar{ display:none; }
+  }
 
   /* ---------- Behance embeds (Design / Brand Photoshoots) ---------- */
   .behance-grid{ display:grid; grid-template-columns:1fr; gap:36px; }
@@ -553,7 +606,7 @@
     font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber);
     border:1px solid var(--amber-soft);padding:3px 8px;
   }
-  .job-time.live{color:var(--rec);border-color:#ef413655;}
+  .job-time.live{color:var(--rec);border-color:#27d36a55;}
   .job-org{color:var(--ink-dim);font-size:14px;margin-bottom:12px;}
   .job ul{margin:0;padding-left:18px;color:var(--ink-dim);font-size:14.5px;line-height:1.75;}
   .job li{margin-bottom:4px;}
@@ -680,8 +733,8 @@
 .hero-proof strong{color:#fff4e8}
 .proof-dot{
   width:8px;height:8px;border-radius:50%;
-  background:#ef4136;
-  box-shadow:0 0 16px rgba(239,65,54,.75);
+  background:#27d36a;
+  box-shadow:0 0 16px rgba(39,211,106,.75);
   flex:0 0 auto;
 }
 .capability-grid{
@@ -1145,64 +1198,56 @@
   <section id="marketing-reels">
     <div class="kicker mono"><span class="num">05</span> — Vertical Cuts</div>
     <h2 class="sec-title reveal">Marketing reels</h2>
-    <div class="reel-grid--vertical reveal">
-
-      <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">01</span><span class="reel-title">Snake with King Ring — Miso by Sonia</span></div>
-        <div class="reel-embed--vertical corner-brackets">
-          <iframe src="https://player.vimeo.com/video/1228506852?h=64dccc41ed&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Snake with king ring for Miso by sonia"></iframe>
-        </div>
+    <div class="m3d reveal" id="m3dR">
+      <div class="m3d-floor" aria-hidden="true"></div>
+      <div class="m3d-stage">
+        <article class="m3d-card" aria-label="Snake with King Ring — Miso by Sonia">
+          <div class="m3d-num mono">01</div>
+          <div class="m3d-vid corner-brackets"><iframe data-src="https://player.vimeo.com/video/1228506852?h=64dccc41ed&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Snake with king ring for Miso by sonia"></iframe></div>
+          <h3 class="m3d-title">Snake with King Ring — Miso by Sonia</h3>
+        </article>
+        <article class="m3d-card" aria-label="Black Panther with Neck Chain — Miso by Sonia">
+          <div class="m3d-num mono">02</div>
+          <div class="m3d-vid corner-brackets"><iframe data-src="https://player.vimeo.com/video/1228506853?h=5d7980ec47&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Black panther with neck chain Miso by sonia"></iframe></div>
+          <h3 class="m3d-title">Black Panther with Neck Chain — Miso by Sonia</h3>
+        </article>
+        <article class="m3d-card" aria-label="Santro in Ice Age">
+          <div class="m3d-num mono">03</div>
+          <div class="m3d-vid corner-brackets"><iframe data-src="https://player.vimeo.com/video/1228506854?h=bc988b6438&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Santro in Ice Age"></iframe></div>
+          <h3 class="m3d-title">Santro in Ice Age</h3>
+        </article>
+        <article class="m3d-card" aria-label="Chained Monster">
+          <div class="m3d-num mono">04</div>
+          <div class="m3d-vid corner-brackets"><iframe data-src="https://player.vimeo.com/video/1228506908?h=9c37d094b1&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Chained Monster"></iframe></div>
+          <h3 class="m3d-title">Chained Monster</h3>
+        </article>
+        <article class="m3d-card" aria-label="Floating Boat Citroen">
+          <div class="m3d-num mono">05</div>
+          <div class="m3d-vid corner-brackets"><iframe data-src="https://player.vimeo.com/video/1228506851?h=0e34a5f5a4&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Floating Boat Citroen"></iframe></div>
+          <h3 class="m3d-title">Floating Boat Citroen</h3>
+        </article>
+        <article class="m3d-card" aria-label="Kumaran Printers — Diwali Offer Reel">
+          <div class="m3d-num mono">06</div>
+          <div class="m3d-vid corner-brackets"><iframe data-src="https://player.vimeo.com/video/1228516185?h=42db9f315c&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Kumaran Printers Diwali offer reel"></iframe></div>
+          <h3 class="m3d-title">Kumaran Printers — Diwali Offer Reel</h3>
+        </article>
+        <article class="m3d-card" aria-label="Shutterr Pross Reel">
+          <div class="m3d-num mono">07</div>
+          <div class="m3d-vid corner-brackets"><iframe data-src="https://player.vimeo.com/video/1228516183?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="sp 02"></iframe></div>
+          <h3 class="m3d-title">Shutterr Pross Reel</h3>
+        </article>
+        <article class="m3d-card" aria-label="Shakthilaya Natyapalli Reel">
+          <div class="m3d-num mono">08</div>
+          <div class="m3d-vid corner-brackets"><iframe data-src="https://player.vimeo.com/video/1228516184?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="fd1cf662-0036-4316-a40d-f76a03e8caf7"></iframe></div>
+          <h3 class="m3d-title">Shakthilaya Natyapalli Reel</h3>
+        </article>
       </div>
-
-      <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">02</span><span class="reel-title">Black Panther with Neck Chain — Miso by Sonia</span></div>
-        <div class="reel-embed--vertical corner-brackets">
-          <iframe src="https://player.vimeo.com/video/1228506853?h=5d7980ec47&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Black panther with neck chain Miso by sonia"></iframe>
-        </div>
+      <div class="m3d-ui">
+        <button class="m3d-btn" id="m3dRPrev" aria-label="Previous reel">&#8592;</button>
+        <div class="m3d-dots" id="m3dRDots"></div>
+        <button class="m3d-btn" id="m3dRNext" aria-label="Next reel">&#8594;</button>
       </div>
-
-      <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">03</span><span class="reel-title">Santro in Ice Age</span></div>
-        <div class="reel-embed--vertical corner-brackets">
-          <iframe src="https://player.vimeo.com/video/1228506854?h=bc988b6438&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Santro in Ice Age"></iframe>
-        </div>
-      </div>
-
-      <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">04</span><span class="reel-title">Chained Monster</span></div>
-        <div class="reel-embed--vertical corner-brackets">
-          <iframe src="https://player.vimeo.com/video/1228506908?h=9c37d094b1&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Chained Monster"></iframe>
-        </div>
-      </div>
-
-      <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">05</span><span class="reel-title">Floating Boat Citroen</span></div>
-        <div class="reel-embed--vertical corner-brackets">
-          <iframe src="https://player.vimeo.com/video/1228506851?h=0e34a5f5a4&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Floating Boat Citroen"></iframe>
-        </div>
-      </div>
-
-      <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">06</span><span class="reel-title">Kumaran Printers — Diwali Offer Reel</span></div>
-        <div class="reel-embed--vertical corner-brackets">
-          <iframe src="https://player.vimeo.com/video/1228516185?h=42db9f315c&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Kumaran Printers Diwali offer reel"></iframe>
-        </div>
-      </div>
-
-      <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">07</span><span class="reel-title">Shutterr Pross Reel</span></div>
-        <div class="reel-embed--vertical corner-brackets">
-          <iframe src="https://player.vimeo.com/video/1228516183?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="sp 02"></iframe>
-        </div>
-      </div>
-
-      <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">08</span><span class="reel-title">Shakthilaya Natyapalli Reel</span></div>
-        <div class="reel-embed--vertical corner-brackets">
-          <iframe src="https://player.vimeo.com/video/1228516184?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="fd1cf662-0036-4316-a40d-f76a03e8caf7"></iframe>
-        </div>
-      </div>
-
+      <p class="m3d-hint mono">Drag or swipe to rotate &middot; tap a side card to bring it forward &middot; press play on the centre card</p>
     </div>
   </section>
 
@@ -1237,44 +1282,42 @@
       </div>
     </div>
 
-    <div class="motion-sub mono reveal">Vertical motion pieces</div>
-    <div class="reel-grid--motion reveal">
-
-      <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">04</span><span class="reel-title">Motion Design Intro — Pendulum</span></div>
-        <div class="reel-embed--vertical corner-brackets">
-          <video controls playsinline preload="none" poster="motion-maverick-pendulum.jpg" aria-label="Motion design intro with a swinging pendulum"><source src="motion-maverick-pendulum.mp4" type="video/mp4"></video>
-        </div>
+    <div class="motion-sub mono reveal">Vertical motion pieces &mdash; rotate the deck</div>
+    <div class="m3d reveal" id="m3d">
+      <div class="m3d-floor" aria-hidden="true"></div>
+      <div class="m3d-stage">
+        <article class="m3d-card" aria-label="Motion Design Intro — Pendulum">
+          <div class="m3d-num mono">04</div>
+          <div class="m3d-vid corner-brackets"><video controls playsinline preload="none" poster="motion-maverick-pendulum.jpg" aria-label="Motion design intro with a swinging pendulum"><source src="motion-maverick-pendulum.mp4" type="video/mp4"></video></div>
+          <h3 class="m3d-title">Motion Design Intro — Pendulum</h3>
+        </article>
+        <article class="m3d-card" aria-label="Gold Cards Reel">
+          <div class="m3d-num mono">05</div>
+          <div class="m3d-vid corner-brackets"><video controls playsinline preload="none" poster="motion-gold-cards.jpg" aria-label="Gold cards promo reel"><source src="motion-gold-cards.mp4" type="video/mp4"></video></div>
+          <h3 class="m3d-title">Gold Cards Reel</h3>
+        </article>
+        <article class="m3d-card" aria-label="VRX Uprise — Terra Wing">
+          <div class="m3d-num mono">06</div>
+          <div class="m3d-vid corner-brackets"><video controls playsinline preload="none" poster="motion-vrx-uprise.jpg" aria-label="VRX Uprise Terra Wing explainer"><source src="motion-vrx-uprise.mp4" type="video/mp4"></video></div>
+          <h3 class="m3d-title">VRX Uprise — Terra Wing</h3>
+        </article>
+        <article class="m3d-card" aria-label="Amazon Electronics Promo">
+          <div class="m3d-num mono">07</div>
+          <div class="m3d-vid corner-brackets"><video controls playsinline preload="none" poster="motion-amazon-promo.jpg" aria-label="Amazon electronics promo"><source src="motion-amazon-promo.mp4" type="video/mp4"></video></div>
+          <h3 class="m3d-title">Amazon Electronics Promo</h3>
+        </article>
+        <article class="m3d-card" aria-label="Keycap Reel — Adobe Suite">
+          <div class="m3d-num mono">08</div>
+          <div class="m3d-vid corner-brackets"><video controls playsinline preload="none" poster="motion-keycap.jpg" aria-label="Keycap reel with Adobe app keys"><source src="motion-keycap.mp4" type="video/mp4"></video></div>
+          <h3 class="m3d-title">Keycap Reel — Adobe Suite</h3>
+        </article>
       </div>
-
-      <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">05</span><span class="reel-title">Gold Cards Reel</span></div>
-        <div class="reel-embed--vertical corner-brackets">
-          <video controls playsinline preload="none" poster="motion-gold-cards.jpg" aria-label="Gold cards promo reel"><source src="motion-gold-cards.mp4" type="video/mp4"></video>
-        </div>
+      <div class="m3d-ui">
+        <button class="m3d-btn" id="m3dPrev" aria-label="Previous video">&#8592;</button>
+        <div class="m3d-dots" id="m3dDots"></div>
+        <button class="m3d-btn" id="m3dNext" aria-label="Next video">&#8594;</button>
       </div>
-
-      <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">06</span><span class="reel-title">VRX Uprise — Terra Wing</span></div>
-        <div class="reel-embed--vertical corner-brackets">
-          <video controls playsinline preload="none" poster="motion-vrx-uprise.jpg" aria-label="VRX Uprise Terra Wing explainer"><source src="motion-vrx-uprise.mp4" type="video/mp4"></video>
-        </div>
-      </div>
-
-      <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">07</span><span class="reel-title">Amazon Electronics Promo</span></div>
-        <div class="reel-embed--vertical corner-brackets">
-          <video controls playsinline preload="none" poster="motion-amazon-promo.jpg" aria-label="Amazon electronics promo"><source src="motion-amazon-promo.mp4" type="video/mp4"></video>
-        </div>
-      </div>
-
-      <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">08</span><span class="reel-title">Keycap Reel — Adobe Suite</span></div>
-        <div class="reel-embed--vertical corner-brackets">
-          <video controls playsinline preload="none" poster="motion-keycap.jpg" aria-label="Keycap reel with Adobe app keys"><source src="motion-keycap.mp4" type="video/mp4"></video>
-        </div>
-      </div>
-
+      <p class="m3d-hint mono">Drag or swipe to rotate &middot; tap a side card to bring it forward</p>
     </div>
   </section>
 
@@ -2070,6 +2113,97 @@
 (function(){
   var vids=[].slice.call(document.querySelectorAll('.reel-grid--motion video, .reel-grid--wide video'));
   vids.forEach(function(v){ v.addEventListener('play',function(){ vids.forEach(function(o){ if(o!==v) o.pause(); }); }); });
+})();
+
+// ---------- 3D rotating video carousel ----------
+function make3D(rootId,prevId,nextId,dotsId,autoRotate){
+  var root=document.getElementById(rootId); if(!root) return;
+  var stage=root.querySelector('.m3d-stage'), cards=[].slice.call(root.querySelectorAll('.m3d-card'));
+  var dotsEl=document.getElementById(dotsId), N=cards.length, active=0, auto=null, userTouched=false, inView=false, ready=false;
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dots=cards.map(function(_,i){var b=document.createElement('button');b.className='m3d-dot';b.setAttribute('aria-label','Go to video '+(i+1));b.addEventListener('click',function(){go(i,true)});dotsEl.appendChild(b);return b;});
+  function cw(){return cards[0].offsetWidth;}
+  function layout(){
+    var w=cw(), narrow=window.innerWidth<560, gap=w*(narrow?0.78:0.7);
+    cards.forEach(function(c,i){
+      var d=i-active; if(d>N/2) d-=N; if(d<-N/2) d+=N;
+      var a=Math.abs(d), rot=Math.max(-62,Math.min(62,-d*(narrow?46:40)));
+      c.style.transform='translateX('+(d*gap)+'px) translateZ('+(-a*110)+'px) rotateY('+rot+'deg) scale('+(1-a*0.07)+')';
+      c.style.opacity=a>2?0:(1-a*0.22);
+      c.style.zIndex=10-a; c.style.pointerEvents=a>2?'none':'auto';
+      c.classList.toggle('is-active',d===0);
+    });
+    dots.forEach(function(b,i){b.classList.toggle('on',i===active);});
+    cards.forEach(function(c,i){
+      var f=c.querySelector('iframe[data-src]'); if(!f) return;
+      var d=Math.abs(i-active); d=Math.min(d,N-d);
+      if(ready && d<=2 && !f.getAttribute('src')) f.setAttribute('src',f.getAttribute('data-src'));
+      else if(d>=4 && f.getAttribute('src')) f.removeAttribute('src');
+    });
+  }
+  function pauseAll(except){cards.forEach(function(c){var v=c.querySelector('video'); if(v&&v!==except) v.pause();});}
+  function go(i,manual){
+    var pf=cards[active].querySelector('iframe[data-src]');
+    if(pf && pf.getAttribute('src') && ((i+N)%N)!==active){ pf.setAttribute('src',pf.getAttribute('data-src')); }
+    active=(i+N)%N; if(manual){userTouched=true; stopAuto();}
+    pauseAll(null); layout();
+  }
+  function startAuto(){ if(reduce||auto||!autoRotate) return; auto=setInterval(function(){ if(inView&&!userTouched&&!document.hidden) go(active+1,false); },4200); }
+  function stopAuto(){ clearInterval(auto); auto=null; }
+  document.getElementById(prevId).addEventListener('click',function(){go(active-1,true)});
+  document.getElementById(nextId).addEventListener('click',function(){go(active+1,true)});
+  cards.forEach(function(c,i){
+    c.addEventListener('click',function(e){ if(i!==active){ e.preventDefault(); go(i,true);} });
+    var v=c.querySelector('video');
+    if(v) v.addEventListener('play',function(){ userTouched=true; stopAuto(); pauseAll(v); });
+  });
+  // drag / swipe
+  var sx=0, sy=0, down=false, moved=false;
+  stage.addEventListener('pointerdown',function(e){
+    if(e.target.closest('.is-active video')) return;
+    down=true; moved=false; sx=e.clientX; sy=e.clientY;
+  });
+  window.addEventListener('pointermove',function(e){
+    if(!down) return; var dx=e.clientX-sx;
+    if(Math.abs(dx)>8){ moved=true; stage.classList.add('drag'); }
+    if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(e.clientY-sy)){ go(active+(dx<0?1:-1),true); sx=e.clientX; }
+  });
+  window.addEventListener('pointerup',function(){ down=false; stage.classList.remove('drag'); });
+  stage.addEventListener('click',function(e){ if(moved){ e.stopPropagation(); e.preventDefault(); moved=false; } },true);
+  root.setAttribute('tabindex','0');
+  root.addEventListener('keydown',function(e){ if(e.key==='ArrowRight') go(active+1,true); if(e.key==='ArrowLeft') go(active-1,true); });
+  window.addEventListener('resize',layout);
+  if('IntersectionObserver' in window){ new IntersectionObserver(function(en){inView=en[0].isIntersecting;},{threshold:.35}).observe(root); } else { inView=true; }
+  if('IntersectionObserver' in window){ new IntersectionObserver(function(en){ if(en[0].isIntersecting && !ready){ ready=true; layout(); } },{rootMargin:'500px'}).observe(root); } else { ready=true; }
+  layout(); startAuto();
+}
+make3D('m3d','m3dPrev','m3dNext','m3dDots',true);
+make3D('m3dR','m3dRPrev','m3dRNext','m3dRDots',false);
+
+// ---------- Scroll progress bar ----------
+(function(){
+  var bar=document.createElement('div'); bar.className='scroll-bar'; document.body.appendChild(bar);
+  var tick=false;
+  function upd(){ var h=document.documentElement.scrollHeight-innerHeight; bar.style.transform='scaleX('+(h>0?Math.min(1,scrollY/h):0)+')'; tick=false; }
+  addEventListener('scroll',function(){ if(!tick){tick=true; requestAnimationFrame(upd);} },{passive:true}); upd();
+})();
+
+// ---------- Cursor glow + 3D tilt (desktop pointers only) ----------
+(function(){
+  if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var g=document.createElement('div'); g.className='cursor-glow'; document.body.appendChild(g);
+  var x=0,y=0,raf=0;
+  addEventListener('mousemove',function(e){ x=e.clientX; y=e.clientY; g.classList.add('on'); if(!raf) raf=requestAnimationFrame(function(){ g.style.transform='translate('+x+'px,'+y+'px)'; raf=0; }); },{passive:true});
+  document.addEventListener('mouseleave',function(){ g.classList.remove('on'); });
+  [].forEach.call(document.querySelectorAll('.cap-card,.gear-card,.vibe-embed'),function(el){
+    el.setAttribute('data-tilt','');
+    el.addEventListener('mousemove',function(e){
+      var r=el.getBoundingClientRect(), px=(e.clientX-r.left)/r.width-.5, py=(e.clientY-r.top)/r.height-.5;
+      el.style.transform='perspective(900px) rotateX('+(-py*7)+'deg) rotateY('+(px*9)+'deg) translateY(-3px)';
+    });
+    el.addEventListener('mouseleave',function(){ el.style.transform=''; });
+  });
 })();
 </script>
 
