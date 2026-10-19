@@ -153,6 +153,30 @@
       linear-gradient(to bottom, rgba(17,17,16,.7) 0%, rgba(17,17,16,0) 18%); }
   .hero-wave{ position:absolute; inset:0; width:100%; height:100%; display:block; mix-blend-mode:screen; opacity:.7;
     -webkit-mask-image:linear-gradient(to bottom, transparent 0%, #000 38%, #000 100%); mask-image:linear-gradient(to bottom, transparent 0%, #000 38%, #000 100%); }
+  /* ---------- Hero: floating 3D icons ---------- */
+  .hero-3d{ position:absolute; inset:0; pointer-events:none; z-index:1; }
+  .ico3d{ position:absolute; left:var(--x); top:var(--y); width:var(--s); height:var(--s); perspective:900px;
+    transform:translate3d(calc(var(--mx,0) * var(--par,16px)), calc(var(--my,0) * var(--par,16px)), 0);
+    transition:transform .25s ease-out; }
+  .ico3d:nth-child(2){ --par:-26px; } .ico3d:nth-child(3){ --par:22px; } .ico3d:nth-child(4){ --par:-12px; }
+  .ico-stage{ position:absolute; inset:0; transform-style:preserve-3d; animation:ico-float var(--dur) ease-in-out infinite; animation-delay:var(--d); }
+  .ico-stage svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+  .ico-shadow{ position:absolute; left:10%; right:10%; bottom:-34px; height:26px; border-radius:50%;
+    background:radial-gradient(ellipse at center, rgba(226,99,43,.45), transparent 70%); filter:blur(8px); animation:ico-shadow var(--dur) ease-in-out infinite; animation-delay:var(--d); }
+  @keyframes ico-float{
+    0%,100%{ transform:translateY(0) rotateX(14deg) rotateY(-30deg) rotateZ(-2deg); }
+    50%{ transform:translateY(-22px) rotateX(-6deg) rotateY(30deg) rotateZ(3deg); }
+  }
+  @keyframes ico-shadow{ 0%,100%{ transform:scale(1); opacity:.9; } 50%{ transform:scale(.72); opacity:.5; } }
+  .hero-3d.paused .ico-stage, .hero-3d.paused .ico-shadow{ animation-play-state:paused; }
+  @media(max-width:760px){
+    .ico3d{ width:calc(var(--s) * .52); height:calc(var(--s) * .52); }
+    .ico3d:nth-child(1){ --x:67% !important; --y:490px !important; }
+    .ico3d:nth-child(2){ --x:70% !important; --y:960px !important; }
+    .ico3d:nth-child(3){ --x:58% !important; --y:850px !important; }
+    .ico3d:nth-child(4){ --x:80% !important; --y:585px !important; }
+  }
+  @media (prefers-reduced-motion: reduce){ .ico-stage,.ico-shadow{ animation:none; } .ico-stage{ transform:rotateX(10deg) rotateY(-22deg); } }
   .hero-bg-grain{ position:absolute; inset:0; opacity:.07; mix-blend-mode:overlay;
     background-image:repeating-linear-gradient(0deg, rgba(255,255,255,.5) 0 1px, transparent 1px 3px); }
   .hero h1 .nw{white-space:nowrap;}
@@ -1006,6 +1030,25 @@
       <video autoplay muted loop playsinline preload="metadata" poster="hero-reel.jpg"><source src="hero-reel.mp4" type="video/mp4"></video>
       <div class="hero-bg-shade"></div>
       <canvas class="hero-wave" id="heroWave"></canvas>
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="icoFront" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffaf0"/><stop offset="1" stop-color="#ead8bf"/></linearGradient>
+          <g id="ic-camera-b"><rect x="8" y="42" width="62" height="42" rx="7"/><polygon points="70,54 94,43 94,81 70,70"/><circle cx="29" cy="29" r="16"/><circle cx="56" cy="24" r="18"/></g>
+          <g id="ic-camera-d"><circle cx="29" cy="29" r="7" fill="#1b1411"/><circle cx="56" cy="24" r="10" fill="#1b1411"/><circle cx="56" cy="24" r="3.4" fill="#e2632b"/><rect x="16" y="54" width="30" height="18" rx="3" fill="#1b1411"/><circle cx="58" cy="52" r="4.5" fill="#e2632b"/><rect x="52" y="62" width="9" height="9" rx="1.5" fill="#e2632b"/></g>
+          <g id="ic-clap-b"><rect x="10" y="38" width="80" height="52" rx="4"/><polygon points="8,22 88,8 91,26 12,41"/></g>
+          <g id="ic-clap-d"><polygon points="20,25 33,23 25,38 13,40" fill="#1b1411"/><polygon points="45,20 58,18 50,33 37,35" fill="#1b1411"/><polygon points="70,16 83,14 75,29 62,31" fill="#1b1411"/><rect x="20" y="52" width="60" height="5" rx="1" fill="#1b1411"/><rect x="20" y="64" width="60" height="5" rx="1" fill="#e2632b"/><rect x="20" y="76" width="60" height="5" rx="1" fill="#1b1411"/></g>
+          <g id="ic-drone-b"><g stroke="currentColor" stroke-width="7" stroke-linecap="round"><line x1="50" y1="50" x2="20" y2="20"/><line x1="50" y1="50" x2="80" y2="20"/><line x1="50" y1="50" x2="20" y2="80"/><line x1="50" y1="50" x2="80" y2="80"/></g><rect x="36" y="28" width="28" height="44" rx="14"/><circle cx="18" cy="18" r="13"/><circle cx="82" cy="18" r="13"/><circle cx="18" cy="82" r="13"/><circle cx="82" cy="82" r="13"/></g>
+          <g id="ic-drone-d"><circle cx="18" cy="18" r="5" fill="#1b1411"/><circle cx="82" cy="18" r="5" fill="#1b1411"/><circle cx="18" cy="82" r="5" fill="#1b1411"/><circle cx="82" cy="82" r="5" fill="#1b1411"/><rect x="44" y="34" width="12" height="22" rx="6" fill="#1b1411"/><rect x="47.5" y="60" width="5" height="7" rx="2.5" fill="#e2632b"/></g>
+          <g id="ic-film-b"><rect x="6" y="26" width="42" height="48" rx="7"/><rect x="60" y="26" width="32" height="48" rx="7"/><rect x="46" y="8" width="12" height="84" rx="3"/><polygon points="40,8 64,8 58,22 46,22"/><polygon points="40,92 64,92 58,78 46,78"/></g>
+          <g id="ic-film-d"><rect x="12" y="32" width="8" height="8" rx="1.5" fill="#1b1411"/><rect x="26" y="32" width="8" height="8" rx="1.5" fill="#1b1411"/><rect x="12" y="60" width="8" height="8" rx="1.5" fill="#1b1411"/><rect x="26" y="60" width="8" height="8" rx="1.5" fill="#1b1411"/><rect x="68" y="32" width="8" height="8" rx="1.5" fill="#1b1411"/><rect x="68" y="60" width="8" height="8" rx="1.5" fill="#1b1411"/><rect x="12" y="45" width="30" height="10" rx="2" fill="#e2632b"/><rect x="66" y="45" width="20" height="10" rx="2" fill="#e2632b"/></g>
+        </defs>
+      </svg>
+      <div class="hero-3d" id="hero3d">
+        <div class="ico3d" data-ico="camera" style="--x:77%;--y:300px;--s:180px;--d:0s;--dur:7s"><div class="ico-shadow"></div><div class="ico-stage"></div></div>
+        <div class="ico3d" data-ico="clap" style="--x:84%;--y:100px;--s:150px;--d:-2s;--dur:6.2s"><div class="ico-shadow"></div><div class="ico-stage"></div></div>
+        <div class="ico3d" data-ico="drone" style="--x:70%;--y:500px;--s:170px;--d:-4s;--dur:8s"><div class="ico-shadow"></div><div class="ico-stage"></div></div>
+        <div class="ico3d" data-ico="film" style="--x:87%;--y:560px;--s:140px;--d:-1s;--dur:6.8s"><div class="ico-shadow"></div><div class="ico-stage"></div></div>
+      </div>
       <div class="hero-bg-grain"></div>
     </div>
 
@@ -2335,6 +2378,35 @@ make3D('m3dR','m3dRPrev','m3dRNext','m3dRDots',false);
     document.addEventListener('visibilitychange',function(){ document.hidden?stop():start(); });
     start();
   } else frame();
+})();
+
+// ---------- Hero: build 3D extruded icons ----------
+(function(){
+  var root=document.getElementById('hero3d'); if(!root) return;
+  var LAYERS=18, STEP=1.7;
+  function mix(a,b,t){ return Math.round(a+(b-a)*t); }
+  function col(t){ // front (amber) -> back (deep ember)
+    return 'rgb('+mix(226,86,t)+','+mix(99,28,t)+','+mix(43,10,t)+')'; }
+  var NS='http://www.w3.org/2000/svg';
+  [].forEach.call(root.querySelectorAll('.ico3d'),function(el){
+    var id=el.getAttribute('data-ico'), stage=el.querySelector('.ico-stage');
+    for(var k=LAYERS;k>=1;k--){
+      var svg=document.createElementNS(NS,'svg'); svg.setAttribute('viewBox','0 0 100 100');
+      svg.style.transform='translateZ('+(-k*STEP)+'px)'; svg.style.color=col(k/LAYERS);
+      svg.setAttribute('fill','currentColor');
+      var u=document.createElementNS(NS,'use'); u.setAttribute('href','#ic-'+id+'-b'); svg.appendChild(u); stage.appendChild(svg);
+    }
+    var f=document.createElementNS(NS,'svg'); f.setAttribute('viewBox','0 0 100 100'); f.style.transform='translateZ(2px)';
+    f.setAttribute('fill','url(#icoFront)'); f.style.color='#f3e6d0';
+    var ub=document.createElementNS(NS,'use'); ub.setAttribute('href','#ic-'+id+'-b'); f.appendChild(ub);
+    var ud=document.createElementNS(NS,'use'); ud.setAttribute('href','#ic-'+id+'-d'); f.appendChild(ud);
+    stage.appendChild(f);
+  });
+  var hero=document.querySelector('.hero');
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    hero.addEventListener('mousemove',function(e){ var r=hero.getBoundingClientRect(); root.parentNode.style.setProperty('--mx',((e.clientX-r.left)/r.width-.5).toFixed(3)); root.parentNode.style.setProperty('--my',((e.clientY-r.top)/Math.min(r.height,900)-.5).toFixed(3)); },{passive:true});
+    if('IntersectionObserver' in window){ new IntersectionObserver(function(en){ root.classList.toggle('paused',!en[0].isIntersecting); }).observe(hero); }
+  }
 })();
 </script>
 
