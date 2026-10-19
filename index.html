@@ -321,7 +321,11 @@
   .motion-sub{ display:flex; align-items:center; gap:14px; margin:56px 0 24px; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--amber); }
   .motion-sub::after{ content:""; flex:1; height:1px; background:var(--hair); }
   .reel-grid--motion{ display:grid; grid-template-columns:minmax(0,340px); justify-content:center; gap:36px; }
-  @media(min-width:640px){ .reel-grid--motion{ grid-template-columns:repeat(3,minmax(0,1fr)); justify-content:stretch; gap:36px 28px; } }
+  @media(min-width:640px){ .reel-grid--motion{ grid-template-columns:repeat(2,minmax(0,1fr)); justify-content:stretch; gap:36px 28px; } }
+  @media(min-width:1000px){ .reel-grid--motion{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
+  @media(min-width:1180px){ .reel-grid--motion{ grid-template-columns:repeat(5,minmax(0,1fr)); gap:36px 22px; } }
+  .reel-grid--wide{ display:grid; grid-template-columns:minmax(0,1fr); max-width:880px; margin:0 auto; }
+  .reel-embed video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; background:#000; }
   .reel-grid--motion .reel-meta{ align-items:flex-start; min-height:38px; }
   .reel-grid--motion .reel-title{ font-size:13px; line-height:1.35; letter-spacing:0; }
   .reel-grid--motion .reel-num{ font-size:11px; flex-shrink:0; }
@@ -1223,27 +1227,51 @@
 
     </div>
 
+    <div class="motion-sub mono reveal">Brand film</div>
+    <div class="reel-grid--wide reveal">
+      <div class="reel-card">
+        <div class="reel-meta"><span class="reel-num">03</span><span class="reel-title">Shakthilaya Natyapalli — A Legacy in Every Step</span></div>
+        <div class="reel-embed corner-brackets">
+          <video controls playsinline preload="none" poster="motion-shakthilaya.jpg" aria-label="Shakthilaya Natyapalli brand film"><source src="motion-shakthilaya.mp4" type="video/mp4"></video>
+        </div>
+      </div>
+    </div>
+
     <div class="motion-sub mono reveal">Vertical motion pieces</div>
     <div class="reel-grid--motion reveal">
 
       <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">03</span><span class="reel-title">Motion Design Intro — Pendulum</span></div>
+        <div class="reel-meta"><span class="reel-num">04</span><span class="reel-title">Motion Design Intro — Pendulum</span></div>
         <div class="reel-embed--vertical corner-brackets">
           <video controls playsinline preload="none" poster="motion-maverick-pendulum.jpg" aria-label="Motion design intro with a swinging pendulum"><source src="motion-maverick-pendulum.mp4" type="video/mp4"></video>
         </div>
       </div>
 
       <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">04</span><span class="reel-title">Gold Cards Reel</span></div>
+        <div class="reel-meta"><span class="reel-num">05</span><span class="reel-title">Gold Cards Reel</span></div>
         <div class="reel-embed--vertical corner-brackets">
           <video controls playsinline preload="none" poster="motion-gold-cards.jpg" aria-label="Gold cards promo reel"><source src="motion-gold-cards.mp4" type="video/mp4"></video>
         </div>
       </div>
 
       <div class="reel-card">
-        <div class="reel-meta"><span class="reel-num">05</span><span class="reel-title">VRX Uprise — Terra Wing</span></div>
+        <div class="reel-meta"><span class="reel-num">06</span><span class="reel-title">VRX Uprise — Terra Wing</span></div>
         <div class="reel-embed--vertical corner-brackets">
           <video controls playsinline preload="none" poster="motion-vrx-uprise.jpg" aria-label="VRX Uprise Terra Wing explainer"><source src="motion-vrx-uprise.mp4" type="video/mp4"></video>
+        </div>
+      </div>
+
+      <div class="reel-card">
+        <div class="reel-meta"><span class="reel-num">07</span><span class="reel-title">Amazon Electronics Promo</span></div>
+        <div class="reel-embed--vertical corner-brackets">
+          <video controls playsinline preload="none" poster="motion-amazon-promo.jpg" aria-label="Amazon electronics promo"><source src="motion-amazon-promo.mp4" type="video/mp4"></video>
+        </div>
+      </div>
+
+      <div class="reel-card">
+        <div class="reel-meta"><span class="reel-num">08</span><span class="reel-title">Keycap Reel — Adobe Suite</span></div>
+        <div class="reel-embed--vertical corner-brackets">
+          <video controls playsinline preload="none" poster="motion-keycap.jpg" aria-label="Keycap reel with Adobe app keys"><source src="motion-keycap.mp4" type="video/mp4"></video>
         </div>
       </div>
 
@@ -2040,7 +2068,7 @@
 
 // Only one self-hosted motion video plays at a time
 (function(){
-  var vids=[].slice.call(document.querySelectorAll('.reel-grid--motion video'));
+  var vids=[].slice.call(document.querySelectorAll('.reel-grid--motion video, .reel-grid--wide video'));
   vids.forEach(function(v){ v.addEventListener('play',function(){ vids.forEach(function(o){ if(o!==v) o.pause(); }); }); });
 })();
 </script>
