@@ -120,6 +120,26 @@
   .topstrip nav a{text-decoration:none;transition:color .2s;}
   .topstrip nav a:hover,.topstrip nav a:focus-visible{color:var(--amber);}
 
+
+  /* ---------- Header: mobile spacing ---------- */
+  .topstrip nav a{white-space:nowrap;}
+  .rec .mono{white-space:nowrap;}
+  @media(max-width:560px){
+    .topstrip .wrap{padding:0 16px;gap:10px;}
+    .brand-group{gap:10px;flex:0 0 auto;}
+    .brand-mark img{height:22px;}
+    .rec{gap:6px;font-size:10px;letter-spacing:.04em;}
+    .topstrip nav{gap:13px;font-size:10.5px;}
+  }
+  @media(max-width:420px){
+    .topstrip .wrap{padding:0 14px;}
+    .rec .mono{display:none;}
+    .topstrip nav{gap:12px;}
+  }
+  @media(max-width:340px){
+    .topstrip nav{gap:9px;font-size:10px;}
+  }
+
   /* ---------- Hero ---------- */
   .hero{
     padding:96px 0 60px;position:relative;
