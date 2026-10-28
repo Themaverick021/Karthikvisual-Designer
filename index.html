@@ -1032,6 +1032,9 @@ body::after{ content:""; position:fixed; inset:0; z-index:-1; pointer-events:non
 .hero-badge i{ width:8px; height:8px; border-radius:50%; background:var(--rec); box-shadow:0 0 0 0 rgba(39,211,106,.6); animation:pulse 1.8s infinite; }
 .hero-badge b{ color:var(--amber); font-weight:700; }
 .hero h1{ font-family:'Inter',sans-serif; font-weight:800; text-transform:none; letter-spacing:-.045em; line-height:.95; }
+.hero h1{ white-space:nowrap; font-size:clamp(28px,11vw,120px); line-height:1.2; overflow:visible; }
+.hero h1 .word{ padding:.06em .1em .2em .03em; margin:-.06em -.1em -.2em -.03em; overflow:visible; }
+.hero h1 .nw{ overflow:visible; }
 .hero h1 .word.accent{ background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
 .hero .frameno{ display:none; }
 
@@ -1169,7 +1172,7 @@ section{ border-top:0; padding:92px 0; }
 
     <div class="hero-badge reveal"><i></i>Available for new projects <b>&middot;</b> Chennai, IN</div>
     <span class="frameno mono">TAKE 01 · SCENE: RESUME · CHENNAI, IN</span>
-    <h1 class="hero-title"><span class="nw"><span class="word" style="--d:0">A.</span> <span class="word" style="--d:1">Karthik</span></span><br><span class="word accent" style="--d:2">Balaji</span></h1>
+    <h1 class="hero-title"><span class="nw"><span class="word" style="--d:0">A.</span> <span class="word" style="--d:1">Karthik</span></span> <span class="word accent" style="--d:2">Balaji</span></h1>
     <p class="hero-pitch reveal">I turn ideas into <span class="pitch-rot" id="pitchRot" aria-live="off">motion.</span></p>
     <div class="role-tags reveal">
       <span class="tag accent">Visual Designer</span>
