@@ -1092,6 +1092,15 @@ section{ border-top:0; padding:92px 0; }
 @media(max-width:760px){ .callsheet-grid{ grid-template-columns:1fr 1fr; } }
 .contact-hero .cta-row{ justify-content:center; }
 </style>
+<style id="mascot-css">
+.tool-icon-wrap.mascot{width:62px;height:62px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.2);box-shadow:0 8px 18px -8px var(--g),0 0 14px -4px var(--g);animation:mascotBob 4.6s ease-in-out infinite}
+.tool-icon-wrap.mascot .tool-icon{width:100%;height:100%;object-fit:cover;filter:none}
+.tool-badge:nth-child(2n) .mascot{animation-delay:-1.4s}.tool-badge:nth-child(3n) .mascot{animation-delay:-2.8s}
+.tool-badge:hover .mascot{box-shadow:0 12px 26px -8px var(--g),0 0 24px 0 var(--g)}
+@keyframes mascotBob{50%{translate:0 -4px}}
+body.calm .tool-icon-wrap.mascot,.calm .mascot{animation:none}
+@media (prefers-reduced-motion:reduce){.tool-icon-wrap.mascot{animation:none}}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#skills">Skip to content</a>
@@ -1253,24 +1262,14 @@ section{ border-top:0; padding:92px 0; }
     <div class="kicker mono"><span class="num">02</span> — Kit Bag</div>
     <h2 class="sec-title reveal">Tools of the trade</h2>
     <div class="tools-grid reveal">
-      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><img class="tool-icon" src="https://cdn.simpleicons.org/adobephotoshop" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="tool-abbr">Ps</span></div><span class="label">Photoshop</span></div>
-      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><img class="tool-icon" src="https://cdn.simpleicons.org/adobeillustrator" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="tool-abbr">Ai</span></div><span class="label">Illustrator</span></div>
-      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><img class="tool-icon" src="https://cdn.simpleicons.org/adobepremierepro" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="tool-abbr">Pr</span></div><span class="label">Premiere</span></div>
-      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><img class="tool-icon" src="https://cdn.simpleicons.org/adobeaftereffects" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="tool-abbr">Ae</span></div><span class="label">After FX</span></div>
-      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><img class="tool-icon" src="https://cdn.simpleicons.org/figma" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="tool-abbr">Fig</span></div><span class="label">Figma</span></div>
-      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><img class="tool-icon" src="https://cdn.simpleicons.org/davinciresolve" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="tool-abbr">Dv</span></div><span class="label">DaVinci</span></div>
-      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><img class="tool-icon" src="https://cdn.simpleicons.org/blender" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="tool-abbr">Bl</span></div><span class="label">Blender</span></div>
-      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><img class="tool-icon" src="https://cdn.simpleicons.org/googlegemini" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="tool-abbr">✦</span></div><span class="label">Gemini</span></div>
-      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><img class="tool-icon" src="https://cdn.simpleicons.org/openai" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="tool-abbr">◎</span></div><span class="label">ChatGPT</span></div>
-      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><img class="tool-icon" src="https://cdn.simpleicons.org/midjourney" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="tool-abbr">MJ</span></div><span class="label">Midjourney</span></div>
-      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><span class="tool-abbr" style="display:flex;">✈</span></div><span class="label">Drone RPC</span></div>
-      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><img class="tool-icon" src="https://cdn.simpleicons.org/claude" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="tool-abbr">CC</span></div><span class="label">Claude Code</span></div>
-      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><span class="tool-abbr" style="display:flex;">OA</span></div><span class="label">OpenArt</span></div>
-      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><img class="tool-icon" src="https://cdn.simpleicons.org/framer" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="tool-abbr">Fr</span></div><span class="label">Framer</span></div>
-      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><img class="tool-icon" src="https://cdn.simpleicons.org/google" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="tool-abbr">St</span></div><span class="label">Google Stitch</span></div>
-      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><span class="tool-abbr" style="display:flex;">AG</span></div><span class="label">Antigravity</span></div>
-      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><img class="tool-icon" src="https://cdn.simpleicons.org/x" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="tool-abbr">Gr</span></div><span class="label">Grok AI</span></div>
-      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><span class="tool-abbr" style="display:flex;">HF</span></div><span class="label">Higgsfield AI</span></div>
+      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap mascot" style="--g:#31a8ff"><img class="tool-icon" src="tool-photoshop.jpg" alt="" loading="lazy" width="60" height="60"></div><span class="label">Photoshop</span></div>
+      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap mascot" style="--g:#ffa800"><img class="tool-icon" src="tool-illustrator.jpg" alt="" loading="lazy" width="60" height="60"></div><span class="label">Illustrator</span></div>
+      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap mascot" style="--g:#9999ff"><img class="tool-icon" src="tool-premiere.jpg" alt="" loading="lazy" width="60" height="60"></div><span class="label">Premiere</span></div>
+      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap mascot" style="--g:#8a7dff"><img class="tool-icon" src="tool-aftereffects.jpg" alt="" loading="lazy" width="60" height="60"></div><span class="label">After FX</span></div>
+      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap mascot" style="--g:#f5792a"><img class="tool-icon" src="tool-blender.jpg" alt="" loading="lazy" width="60" height="60"></div><span class="label">Blender</span></div>
+      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap mascot" style="--g:#74c0ac"><img class="tool-icon" src="tool-chatgpt.jpg" alt="" loading="lazy" width="60" height="60"></div><span class="label">ChatGPT</span></div>
+      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap mascot" style="--g:#e98e74"><img class="tool-icon" src="tool-claude.jpg" alt="" loading="lazy" width="60" height="60"></div><span class="label">Claude Code</span></div>
+      <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap mascot" style="--g:#d7ff00"><img class="tool-icon" src="tool-higgsfield.jpg" alt="" loading="lazy" width="60" height="60"></div><span class="label">Higgsfield AI</span></div>
       <div class="tool-badge" tabindex="0"><div class="tool-icon-wrap"><img class="tool-icon" src="https://cdn.simpleicons.org/cursor" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="tool-abbr">Cu</span></div><span class="label">Cursor</span></div>
     </div>
   </section>
