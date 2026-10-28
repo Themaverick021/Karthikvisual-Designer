@@ -40,7 +40,7 @@
     --hair-soft:#242220;
     --ink:#f4f0e6;
     --ink-dim:#a7a196;
-    --ink-faint:#6f6a60;
+    --ink-faint:#8d877c;
     --amber:#e2632b;
     --amber-soft:#e2632b33;
     --rec:#27d36a;
@@ -169,12 +169,16 @@
   }
   @keyframes ico-shadow{ 0%,100%{ transform:scale(1); opacity:.9; } 50%{ transform:scale(.72); opacity:.5; } }
   .hero-3d.paused .ico-stage, .hero-3d.paused .ico-shadow{ animation-play-state:paused; }
+  @media(min-width:1340px){
+    .ico3d[data-ico="clap"]{ --x:calc(50% - 668px) !important; --y:330px !important; --par:22px; }
+    .ico3d[data-ico="film"]{ --x:calc(50% - 658px) !important; --y:640px !important; --par:14px; }
+  }
   @media(max-width:760px){
     .ico3d{ width:calc(var(--s) * .52); height:calc(var(--s) * .52); }
-    .ico3d:nth-child(1){ --x:67% !important; --y:490px !important; }
-    .ico3d:nth-child(2){ --x:70% !important; --y:960px !important; }
-    .ico3d:nth-child(3){ --x:58% !important; --y:850px !important; }
-    .ico3d:nth-child(4){ --x:80% !important; --y:585px !important; }
+    .ico3d:nth-child(1){ --x:60% !important; --y:512px !important; }
+    .ico3d:nth-child(2){ --x:74% !important; --y:1010px !important; }
+    .ico3d:nth-child(3){ --x:58% !important; --y:900px !important; }
+    .ico3d:nth-child(4){ --x:80% !important; --y:568px !important; }
   }
   @media (prefers-reduced-motion: reduce){ .ico-stage,.ico-shadow{ animation:none; } .ico-stage{ transform:rotateX(10deg) rotateY(-22deg); } }
   .hero-bg-grain{ position:absolute; inset:0; opacity:.07; mix-blend-mode:overlay;
@@ -455,6 +459,27 @@
   @media (prefers-reduced-motion: reduce){
     .m3d-card{ transition:none; } .sec-title.reveal{ clip-path:none; transform:none; } .cursor-glow,.scroll-bar{ display:none; }
   }
+
+
+  /* ---------- Accessibility: skip link, focus, calm mode ---------- */
+  .skip-link{ position:fixed; left:12px; top:-60px; z-index:2000; background:var(--amber); color:#111; padding:10px 16px; font-weight:700; text-decoration:none; transition:top .2s; }
+  .skip-link:focus{ top:12px; }
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible{ outline:2px solid var(--amber); outline-offset:3px; }
+  .calm-btn{ position:fixed; left:16px; bottom:16px; z-index:900; display:flex; align-items:center; gap:8px; padding:9px 14px; border-radius:99px;
+    background:rgba(17,17,16,.88); color:var(--ink); border:1px solid var(--hair); font:600 12px 'Inter',sans-serif; letter-spacing:.03em; cursor:pointer; backdrop-filter:blur(6px);
+    transition:border-color .25s, background .25s; }
+  .calm-btn:hover{ border-color:var(--amber); }
+  .calm-btn[aria-pressed="true"]{ background:var(--amber); color:#111; border-color:var(--amber); }
+  body.calm *, body.calm *::before, body.calm *::after{ animation:none !important; }
+  body.calm .reveal, body.calm .sec-title.reveal{ opacity:1 !important; transform:none !important; clip-path:none !important; transition:none !important; }
+  body.calm .hero-title .word{ opacity:1; transform:none; }
+  body.calm .lede-line{ opacity:1; filter:none; transform:none; transition:none; }
+  body.calm .lede .hl{ background-size:100% 2px; transition:none; }
+  body.calm .hero-wave, body.calm .cursor-glow, body.calm .hero-bg-grain{ display:none; }
+  body.calm .hero-bg video{ opacity:.35; }
+  body.calm [data-tilt]{ transform:none !important; }
+  body.calm .ico-stage{ transform:rotateX(10deg) rotateY(-22deg); }
+  body.calm .m3d-card{ transition:none; }
 
   /* ---------- Behance embeds (Design / Brand Photoshoots) ---------- */
   .behance-grid{ display:grid; grid-template-columns:1fr; gap:36px; }
@@ -977,8 +1002,97 @@
 }
 
 </style>
+<style id="saas-skin">
+/* ===== SaaS SKIN — delete this whole <style> block to return to the broadcast look ===== */
+:root{ --r:18px; --glass:rgba(255,255,255,.045); --glass-b:rgba(255,255,255,.10); --grad:linear-gradient(135deg,#ff9a5a 0%,#e2632b 55%,#c2410c 100%); }
+body{ background:var(--bg); }
+body::before{ content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(900px 520px at 50% -8%, rgba(226,99,43,.20), transparent 62%),
+    radial-gradient(640px 380px at 92% 38%, rgba(255,154,90,.07), transparent 60%),
+    radial-gradient(640px 380px at 4% 70%, rgba(226,99,43,.06), transparent 60%); }
+body::after{ content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.55;
+  background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:64px 64px; -webkit-mask-image:radial-gradient(ellipse 80% 55% at 50% 0%,#000,transparent 75%); mask-image:radial-gradient(ellipse 80% 55% at 50% 0%,#000,transparent 75%); }
+
+/* Navbar -> floating glass pill */
+.topstrip{ top:14px; margin:14px auto 0; width:min(1040px,calc(100% - 20px)); border:1px solid var(--glass-b); border-radius:999px;
+  background:rgba(22,20,18,.62); backdrop-filter:blur(16px) saturate(1.5); -webkit-backdrop-filter:blur(16px) saturate(1.5);
+  box-shadow:0 10px 40px -12px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.06); }
+.topstrip .wrap{ padding:0 10px 0 18px; height:52px; }
+.topstrip nav{ align-items:center; }
+.topstrip nav a.nav-cta{ background:var(--grad); color:#140b05; font-weight:700; padding:8px 16px; border-radius:999px; box-shadow:0 6px 20px -6px rgba(226,99,43,.7); }
+.topstrip nav a.nav-cta:hover{ color:#140b05; filter:brightness(1.1); transform:translateY(-1px); }
+@media(max-width:560px){ .topstrip .wrap{ padding:0 8px 0 12px; } .topstrip nav a.nav-cta{ padding:7px 11px; } }
+@media(max-width:420px){ .topstrip nav a[href="#edu"]{ display:none; } }
+
+/* Hero */
+.hero-badge{ display:inline-flex; align-items:center; gap:10px; padding:7px 14px 7px 10px; margin-bottom:22px; border-radius:999px; position:relative; z-index:1;
+  background:rgba(255,255,255,.06); border:1px solid var(--glass-b); font-size:12.5px; font-weight:600; color:var(--ink); backdrop-filter:blur(8px); }
+.hero-badge i{ width:8px; height:8px; border-radius:50%; background:var(--rec); box-shadow:0 0 0 0 rgba(39,211,106,.6); animation:pulse 1.8s infinite; }
+.hero-badge b{ color:var(--amber); font-weight:700; }
+.hero h1{ font-family:'Inter',sans-serif; font-weight:800; text-transform:none; letter-spacing:-.045em; line-height:.95; }
+.hero h1 .word.accent{ background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.hero .frameno{ display:none; }
+
+/* Buttons & chips -> pills */
+.btn{ border-radius:999px; padding:13px 22px; text-transform:none; letter-spacing:.01em; font-weight:600; border:1px solid var(--glass-b); background:var(--glass); backdrop-filter:blur(8px); }
+.btn.primary{ background:var(--grad); border-color:transparent; color:#140b05; box-shadow:0 12px 30px -10px rgba(226,99,43,.75), inset 0 1px 0 rgba(255,255,255,.35); }
+.btn.primary:hover{ filter:brightness(1.08); }
+.tag{ border-radius:999px; background:var(--glass); border-color:var(--glass-b); }
+.tag.accent{ background:rgba(226,99,43,.14); }
+.hero-stats{ border-top:0; padding:0; gap:12px; max-width:none; }
+.hero-stats div{ background:var(--glass); border:1px solid var(--glass-b); border-radius:var(--r); padding:16px 22px; min-width:150px; backdrop-filter:blur(8px); }
+
+/* Section headings: SaaS type */
+.kicker{ display:inline-flex; padding:7px 15px; border-radius:999px; background:rgba(255,255,255,.05); border:1px solid var(--glass-b); font-size:13px; margin-bottom:18px; }
+.sec-title{ font-family:'Inter',sans-serif; font-weight:800; text-transform:none; letter-spacing:-.04em; line-height:1.02; font-size:clamp(34px,5.4vw,60px);
+  background:linear-gradient(180deg,#fff 30%,#a9a399 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+section{ border-top:0; padding:92px 0; }
+
+/* Cards -> glass */
+.cap-card,.gear-card,.stat,.tool-badge,.callsheet,.job .job-body{ border-radius:var(--r); }
+.cap-card,.gear-card{ border:1px solid var(--glass-b); background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.015)); box-shadow:inset 0 1px 0 rgba(255,255,255,.07), 0 20px 50px -30px rgba(0,0,0,.8); position:relative; overflow:hidden; }
+.cap-card::after,.gear-card::after,.hero-stats div::after{ content:""; position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity .3s;
+  background:radial-gradient(360px circle at var(--sx,50%) var(--sy,50%), rgba(226,99,43,.20), transparent 46%); }
+.cap-card:hover::after,.gear-card:hover::after,.hero-stats div:hover::after{ opacity:1; }
+.hero-stats div{ position:relative; overflow:hidden; }
+.stats{ gap:14px; background:none; border:0; }
+.stat{ border:1px solid var(--glass-b); background:var(--glass); }
+.tool-badge{ background:var(--glass); border:1px solid var(--glass-b); }
+.callsheet{ border:1px solid var(--glass-b); background:var(--glass); padding:30px; border-radius:var(--r); }
+.reel-embed,.reel-embed--vertical,.behance-embed,.vibe-embed,.m3d-vid,.signature-reel{ border-radius:var(--r); border-color:var(--glass-b); }
+.corner-brackets::before,.corner-brackets::after{ display:none; }
+.hero-photo-frame{ border-radius:var(--r); }
+.job-time,.m3d-btn{ border-radius:999px; }
+.m3d-card.is-active .m3d-vid{ box-shadow:0 30px 80px -24px rgba(226,99,43,.55), 0 0 0 1px rgba(226,99,43,.5); }
+
+/* Capabilities -> bento grid */
+.capability-grid{ grid-template-columns:repeat(6,minmax(0,1fr)); gap:16px; }
+.cap-card{ min-height:250px; grid-column:span 2; }
+.cap-card:nth-child(1){ grid-column:span 3; min-height:290px; background:linear-gradient(160deg,rgba(226,99,43,.22),rgba(255,255,255,.02) 60%); }
+.cap-card:nth-child(2){ grid-column:span 3; min-height:290px; }
+@media(max-width:900px){ .capability-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } .cap-card,.cap-card:nth-child(n){ grid-column:span 1; min-height:230px; } .cap-card:nth-child(1){ grid-column:span 2; } }
+@media(max-width:560px){ .capability-grid{ grid-template-columns:1fr; } .cap-card:nth-child(n){ grid-column:span 1; } }
+
+/* Contact -> CTA card */
+.contact-hero{ margin:40px auto 0; width:min(1040px,calc(100% - 28px)); border:1px solid var(--glass-b); border-radius:28px; text-align:center; overflow:hidden; position:relative;
+  background:radial-gradient(600px 300px at 50% 0%,rgba(226,99,43,.35),transparent 70%),linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.015)); box-shadow:0 40px 100px -40px rgba(226,99,43,.55); }
+.contact-hero .kicker{ margin-inline:auto; }
+.contact-title{ font-family:'Inter',sans-serif; font-weight:800; text-transform:none; letter-spacing:-.05em; line-height:.98; font-size:clamp(40px,7vw,92px); }
+.contact-title span{ background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.contact-hero .section-lead{ margin-inline:auto; text-align:center; text-align-last:center; }
+.callsheet-grid{ grid-template-columns:1.7fr 1fr 1.3fr 1fr; }
+@media(max-width:560px){ .hero-stats{ gap:10px; } .hero-stats div{ min-width:0; flex:1 1 calc(50% - 10px); padding:14px 16px; } }
+.cs-val{ overflow-wrap:anywhere; }
+.cap-card .tag,.cap-card span.chip,.cap-tags span,.gear-card .tag{ border-radius:999px; }
+@media(max-width:760px){ .callsheet-grid{ grid-template-columns:1fr 1fr; } }
+.contact-hero .cta-row{ justify-content:center; }
+</style>
 </head>
 <body>
+<a class="skip-link" href="#skills">Skip to content</a>
+<button class="calm-btn" id="calmBtn" type="button" aria-pressed="false" title="Turn animations off for easier reading"><span aria-hidden="true">&#9680;</span> <span id="calmLbl">Calm mode</span></button>
 
 <div class="letterbox-top"></div>
 <div class="letterbox-bottom"></div>
@@ -1018,6 +1132,7 @@
       <a href="#design">Design</a>
       <a href="#edu">Education</a>
       <a href="#contact">Contact</a>
+      <a class="nav-cta" href="mailto:Karthikbalaji7869@gmail.com">Hire me</a>
     </nav>
   </div>
 </header>
@@ -1052,6 +1167,7 @@
       <div class="hero-bg-grain"></div>
     </div>
 
+    <div class="hero-badge reveal"><i></i>Available for new projects <b>&middot;</b> Chennai, IN</div>
     <span class="frameno mono">TAKE 01 · SCENE: RESUME · CHENNAI, IN</span>
     <h1 class="hero-title"><span class="nw"><span class="word" style="--d:0">A.</span> <span class="word" style="--d:1">Karthik</span></span><br><span class="word accent" style="--d:2">Balaji</span></h1>
     <p class="hero-pitch reveal">I turn ideas into <span class="pitch-rot" id="pitchRot" aria-live="off">motion.</span></p>
@@ -2252,7 +2368,7 @@ function make3D(rootId,prevId,nextId,dotsId,autoRotate){
     active=(i+N)%N; if(manual){userTouched=true; stopAuto();}
     pauseAll(null); layout();
   }
-  function startAuto(){ if(reduce||auto||!autoRotate) return; auto=setInterval(function(){ if(inView&&!userTouched&&!document.hidden) go(active+1,false); },4200); }
+  function startAuto(){ if(reduce||auto||!autoRotate) return; auto=setInterval(function(){ if(inView&&!userTouched&&!document.hidden&&!window.__calm) go(active+1,false); },4200); }
   function stopAuto(){ clearInterval(auto); auto=null; }
   document.getElementById(prevId).addEventListener('click',function(){go(active-1,true)});
   document.getElementById(nextId).addEventListener('click',function(){go(active+1,true)});
@@ -2317,6 +2433,7 @@ make3D('m3dR','m3dRPrev','m3dRNext','m3dRDots',false);
   if(el && !reduce){
     var words=['motion.','brands.','stories.','reels.','visuals.'], i=0;
     setInterval(function(){
+      if(window.__calm) return;
       el.classList.add('out');
       setTimeout(function(){ i=(i+1)%words.length; el.textContent=words[i]; el.classList.remove('out'); },360);
     },2400);
@@ -2333,7 +2450,7 @@ make3D('m3dR','m3dRPrev','m3dRNext','m3dRDots',false);
   setTimeout(run,900);
   // pause hero video when off-screen
   var v=document.querySelector('.hero-bg video');
-  if(v && 'IntersectionObserver' in window){ new IntersectionObserver(function(en){ if(en[0].isIntersecting){ v.play().catch(function(){}); } else { v.pause(); } }).observe(document.querySelector('.hero')); }
+  if(v && 'IntersectionObserver' in window){ new IntersectionObserver(function(en){ if(en[0].isIntersecting){ if(!window.__calm) v.play().catch(function(){}); } else { v.pause(); } }).observe(document.querySelector('.hero')); }
 })();
 
 // ---------- Hero: 3D wave mesh ----------
@@ -2369,8 +2486,9 @@ make3D('m3dR','m3dRPrev','m3dRNext','m3dRDots',false);
   }
   var last=0;
   function loop(ts){ if(!running) return; if(ts-last>30){ last=ts; t+=.028; mx+=(tx-mx)*.06; my+=(ty-my)*.06; frame(); } requestAnimationFrame(loop); }
-  function start(){ if(reduce||running||!vis||document.hidden) return; running=true; requestAnimationFrame(loop); }
+  function start(){ if(reduce||running||!vis||document.hidden||window.__calm) return; running=true; requestAnimationFrame(loop); }
   function stop(){ running=false; }
+  document.addEventListener('calmchange',function(){ window.__calm?stop():start(); });
   window.addEventListener('resize',size); size();
   if(!reduce){
     hero.parentNode.addEventListener('mousemove',function(e){ var r=hero.getBoundingClientRect(); tx=((e.clientX-r.left)/r.width-.5)*2; ty=((e.clientY-r.top)/r.height-.5)*2; },{passive:true});
@@ -2407,6 +2525,32 @@ make3D('m3dR','m3dRPrev','m3dRNext','m3dRDots',false);
     hero.addEventListener('mousemove',function(e){ var r=hero.getBoundingClientRect(); root.parentNode.style.setProperty('--mx',((e.clientX-r.left)/r.width-.5).toFixed(3)); root.parentNode.style.setProperty('--my',((e.clientY-r.top)/Math.min(r.height,900)-.5).toFixed(3)); },{passive:true});
     if('IntersectionObserver' in window){ new IntersectionObserver(function(en){ root.classList.toggle('paused',!en[0].isIntersecting); }).observe(hero); }
   }
+})();
+
+// ---------- Calm mode (animations off) ----------
+(function(){
+  var btn=document.getElementById('calmBtn'), lbl=document.getElementById('calmLbl'); if(!btn) return;
+  var KEY='kb-calm', saved=null;
+  try{ saved=localStorage.getItem(KEY); }catch(e){}
+  var prefers=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function apply(on,persist){
+    window.__calm=on; document.body.classList.toggle('calm',on);
+    btn.setAttribute('aria-pressed',on?'true':'false'); lbl.textContent=on?'Calm mode: on':'Calm mode';
+    var v=document.querySelector('.hero-bg video'); if(v){ if(on) v.pause(); else v.play().catch(function(){}); }
+    [].forEach.call(document.querySelectorAll('.m3d-card video'),function(x){ if(on) x.pause(); });
+    document.dispatchEvent(new Event('calmchange'));
+    if(persist){ try{ localStorage.setItem(KEY,on?'1':'0'); }catch(e){} }
+  }
+  btn.addEventListener('click',function(){ apply(!window.__calm,true); });
+  apply(saved===null?prefers:saved==='1',false);
+})();
+
+// ---------- SaaS skin: card spotlight follows cursor ----------
+(function(){
+  if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  [].forEach.call(document.querySelectorAll('.cap-card,.gear-card,.hero-stats div'),function(el){
+    el.addEventListener('mousemove',function(e){ var r=el.getBoundingClientRect(); el.style.setProperty('--sx',(e.clientX-r.left)+'px'); el.style.setProperty('--sy',(e.clientY-r.top)+'px'); });
+  });
 })();
 </script>
 
