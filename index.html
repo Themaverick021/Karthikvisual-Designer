@@ -1172,6 +1172,55 @@ body.calm .hero-spider-glow{animation:none}
 .hero h1{letter-spacing:-.015em!important;font-size:clamp(28px,10.2vw,112px)!important}
 .hero h1 .word{letter-spacing:-.015em}
 </style>
+<style id="ux-pass-2">
+html{scroll-padding-top:96px}
+.m3d-pause{font-size:12px;letter-spacing:0}
+.hire-bar a.p{color:#140b05!important}
+a,button,[role=button],.m3d-btn,.cert-card,.tool-badge{touch-action:manipulation}
+:focus-visible{scroll-margin-top:96px;scroll-margin-bottom:110px}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style id="theme-obsidian">
+/* THEME: Obsidian Teal — ink-navy base, signal-orange brand accent, teal highlight. Revert: delete this block + the Space Grotesk/Manrope font link. */
+:root{
+  --bg:#0a0d12; --bg-panel:#10151c; --bg-panel-2:#151b24; --hair:#263040; --hair-soft:#1a222e;
+  --ink:#f2f5f8; --ink-dim:#a9b4c2; --ink-faint:#8b97a7;
+  --amber:#ff6b35; --amber-soft:#ff6b3533; --teal:#2ee6c5; --teal-soft:rgba(46,230,197,.16);
+  --glass:rgba(255,255,255,.05); --glass-b:rgba(190,210,235,.14);
+  --grad:linear-gradient(135deg,#ff8a4c 0%,#ff6b35 52%,#e8431f 100%);
+  --font-head:'Space Grotesk','Inter',system-ui,sans-serif; --font-body:'Manrope','Inter',system-ui,sans-serif;
+}
+body{font-family:var(--font-body);background:radial-gradient(1100px 650px at 88% -8%,rgba(46,230,197,.09),transparent 62%),radial-gradient(900px 600px at -5% 32%,rgba(255,107,53,.08),transparent 60%),var(--bg);background-attachment:fixed}
+.hero h1,.sec-title,.contact-title,.credit-title,.cert-t,.cap-card h3,.gear-card h3,.m3d-title,.hero-stats b{font-family:var(--font-head)!important;letter-spacing:-.025em}
+.sec-title{background:linear-gradient(180deg,#fff 30%,#9fb0c4 100%);-webkit-background-clip:text;background-clip:text}
+.hero h1{letter-spacing:-.02em!important}
+.kicker .num{color:var(--teal)}
+.kicker{background:var(--teal-soft);border-color:rgba(46,230,197,.28)}
+.cert-d,.pitch-rot{color:var(--amber)}
+.cert-card:hover,.cert-card:focus-visible,.tool-badge:hover,.tool-badge:focus-visible{border-color:var(--teal);box-shadow:0 22px 44px -18px rgba(46,230,197,.35)}
+.tool-badge:hover .label{color:var(--teal)}
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+::selection{background:var(--teal);color:#06110f}
+.scroll-bar{background:linear-gradient(90deg,var(--amber),var(--teal))!important}
+.side-dots a.active{background:var(--teal)!important}
+.m3d-dot.on{background:var(--teal)!important}
+.topstrip{background:rgba(10,13,18,.72)!important}
+.hero-stats b{color:var(--amber)}
+.hero-bg-shade{background:linear-gradient(to bottom,rgba(10,13,18,.82),rgba(10,13,18,.72) 55%,var(--bg) 100%)!important}
+.credit-row:hover .credit-title{color:var(--teal)}
+.cc-in,.to-top{border-color:var(--glass-b)}
+.hire-bar{background:linear-gradient(180deg,transparent,rgba(10,13,18,.94) 40%)}
+</style>
+<style id="tag-orange">
+.role-tags .tag{color:#ff8a4c!important;border-color:rgba(255,107,53,.6)!important;background:rgba(255,107,53,.08)!important}
+.role-tags .tag:hover{background:rgba(255,107,53,.18)!important;border-color:#ff6b35!important}
+</style>
+<style id="spider-small">
+.hero-spider,.hero-spider.on{position:relative!important;left:auto!important;top:auto!important;transform:none!important;width:132px!important;height:132px;aspect-ratio:1;display:block;margin:0 auto 10px;z-index:2;pointer-events:none}
+.hero-spider.on{opacity:1}
+.hero-spider::before{content:"";position:absolute;inset:-18%;background:radial-gradient(circle,rgba(255,107,53,.28),transparent 65%);z-index:-1;filter:blur(4px)}
+@media(max-width:760px){.hero-spider,.hero-spider.on{width:104px!important;height:104px}}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#skills">Skip to content</a>
@@ -1230,8 +1279,6 @@ body.calm .hero-spider-glow{animation:none}
       <video autoplay muted loop playsinline preload="metadata" poster="hero-reel.jpg"><source src="hero-reel.mp4" type="video/mp4"></video>
       <div class="hero-bg-shade"></div>
       <canvas class="hero-wave" id="heroWave"></canvas>
-      <div class="hero-spider-glow"></div>
-      <div class="hero-spider" id="heroSpider" role="img" aria-label="Rotating three-dimensional chrome spider emblem"></div>
       <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
         <defs>
           <linearGradient id="icoFront" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffaf0"/><stop offset="1" stop-color="#ead8bf"/></linearGradient>
@@ -1254,6 +1301,7 @@ body.calm .hero-spider-glow{animation:none}
       <div class="hero-bg-grain"></div>
     </div>
 
+    <div class="hero-spider" id="heroSpider" role="img" aria-label="Rotating three-dimensional chrome spider emblem"></div>
     <div class="hero-badge reveal"><i></i>Available for new projects <b>&middot;</b> Chennai, IN</div>
     <span class="frameno mono">TAKE 01 · SCENE: RESUME · CHENNAI, IN</span>
     <h1 class="hero-title"><span class="nw"><span class="word" style="--d:0">A.</span> <span class="word" style="--d:1">Karthik</span></span> <span class="word accent" style="--d:2">Balaji</span></h1>
@@ -2486,7 +2534,7 @@ body.calm .hero-spider-glow{animation:none}
 function make3D(rootId,prevId,nextId,dotsId,autoRotate){
   var root=document.getElementById(rootId); if(!root) return;
   var stage=root.querySelector('.m3d-stage'), cards=[].slice.call(root.querySelectorAll('.m3d-card'));
-  var dotsEl=document.getElementById(dotsId), N=cards.length, active=0, auto=null, userTouched=false, inView=false, ready=false;
+  var dotsEl=document.getElementById(dotsId), N=cards.length, active=0, auto=null, userTouched=false, inView=false, ready=false, hoverPause=false, userPaused=false;
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var dots=cards.map(function(_,i){var b=document.createElement('button');b.className='m3d-dot';b.setAttribute('aria-label','Go to video '+(i+1));b.addEventListener('click',function(){go(i,true)});dotsEl.appendChild(b);return b;});
   function cw(){return cards[0].offsetWidth;}
@@ -2515,7 +2563,7 @@ function make3D(rootId,prevId,nextId,dotsId,autoRotate){
     active=(i+N)%N; if(manual){userTouched=true; stopAuto();}
     pauseAll(null); layout();
   }
-  function startAuto(){ if(reduce||auto||!autoRotate) return; auto=setInterval(function(){ if(inView&&!userTouched&&!document.hidden&&!window.__calm) go(active+1,false); },4200); }
+  function startAuto(){ if(reduce||auto||!autoRotate) return; auto=setInterval(function(){ if(inView&&!userTouched&&!userPaused&&!hoverPause&&!document.hidden&&!window.__calm) go(active+1,false); },4200); }
   function stopAuto(){ clearInterval(auto); auto=null; }
   document.getElementById(prevId).addEventListener('click',function(){go(active-1,true)});
   document.getElementById(nextId).addEventListener('click',function(){go(active+1,true)});
@@ -2542,6 +2590,13 @@ function make3D(rootId,prevId,nextId,dotsId,autoRotate){
   window.addEventListener('resize',layout);
   if('IntersectionObserver' in window){ new IntersectionObserver(function(en){inView=en[0].isIntersecting;},{threshold:.35}).observe(root); } else { inView=true; }
   if('IntersectionObserver' in window){ new IntersectionObserver(function(en){ if(en[0].isIntersecting && !ready){ ready=true; layout(); } },{rootMargin:'500px'}).observe(root); } else { ready=true; }
+  if(autoRotate){
+    root.addEventListener('mouseenter',function(){hoverPause=true}); root.addEventListener('mouseleave',function(){hoverPause=false});
+    root.addEventListener('focusin',function(){hoverPause=true}); root.addEventListener('focusout',function(){hoverPause=false});
+    var ui=root.querySelector('.m3d-ui'); if(ui&&!reduce){ var pb=document.createElement('button'); pb.type='button'; pb.className='m3d-btn m3d-pause'; pb.setAttribute('aria-pressed','false'); pb.setAttribute('aria-label','Pause automatic rotation'); pb.innerHTML='&#10074;&#10074;';
+      pb.addEventListener('click',function(){ userPaused=!userPaused; pb.setAttribute('aria-pressed',String(userPaused)); pb.setAttribute('aria-label',userPaused?'Resume automatic rotation':'Pause automatic rotation'); pb.innerHTML=userPaused?'&#9654;':'&#10074;&#10074;'; });
+      ui.appendChild(pb); }
+  }
   layout(); startAuto();
 }
 make3D('m3d','m3dPrev','m3dNext','m3dDots',true);
