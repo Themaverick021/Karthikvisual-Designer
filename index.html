@@ -1215,14 +1215,34 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid 
 .role-tags .tag{color:#ff8a4c!important;border-color:rgba(255,107,53,.6)!important;background:rgba(255,107,53,.08)!important}
 .role-tags .tag:hover{background:rgba(255,107,53,.18)!important;border-color:#ff6b35!important}
 </style>
+<style id="loader-css">
+html.is-loading,html.is-loading body{overflow:hidden}
+#loader{position:fixed;inset:0;z-index:100000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:radial-gradient(700px 500px at 50% 45%,rgba(255,107,53,.16),transparent 65%),radial-gradient(900px 600px at 80% 0%,rgba(46,230,197,.07),transparent 60%),#0a0d12;transition:opacity .7s ease,visibility .7s ease,transform .9s cubic-bezier(.7,0,.2,1)}
+#loader.done{opacity:0;visibility:hidden;transform:scale(1.04);pointer-events:none}
+.ld-spider{position:relative;width:min(58vw,260px);aspect-ratio:1;opacity:0;transition:opacity .8s ease}
+.ld-spider.on{opacity:1}
+.ld-spider canvas{display:block;width:100%;height:100%}
+.ld-glow{position:absolute;left:50%;top:50%;width:min(80vw,520px);aspect-ratio:1;transform:translate(-50%,-62%);background:radial-gradient(circle,rgba(255,107,53,.3),transparent 62%);filter:blur(10px);animation:ldPulse 2.4s ease-in-out infinite;pointer-events:none}
+.ld-txt{position:relative;font:600 12px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.32em;color:#a9b4c2;padding-left:.32em}
+.ld-bar{position:relative;width:min(60vw,200px);height:3px;border-radius:3px;background:rgba(255,255,255,.1);overflow:hidden}
+.ld-bar i{position:absolute;inset:0 auto 0 0;width:40%;border-radius:3px;background:linear-gradient(90deg,#ff6b35,#2ee6c5);animation:ldBar 1.3s cubic-bezier(.6,0,.4,1) infinite}
+@keyframes ldBar{0%{transform:translateX(-100%)}100%{transform:translateX(260%)}}
+@keyframes ldPulse{0%,100%{opacity:.6}50%{opacity:1}}
+@media(prefers-reduced-motion:reduce){.ld-bar i{animation:none;width:100%}.ld-glow{animation:none}#loader,#loader.done{transition-duration:.01s;transform:none}}
+</style>
 <style id="spider-small">
-.hero-spider,.hero-spider.on{position:relative!important;left:auto!important;top:auto!important;transform:none!important;width:132px!important;height:132px;aspect-ratio:1;display:block;margin:0 auto 10px;z-index:2;pointer-events:none}
+.hero-spider,.hero-spider.on{position:relative!important;left:auto!important;top:auto!important;transform:none!important;width:150px!important;height:150px;aspect-ratio:1;display:block;margin:0 auto 10px;z-index:2;pointer-events:none}
 .hero-spider.on{opacity:1}
 .hero-spider::before{content:"";position:absolute;inset:-18%;background:radial-gradient(circle,rgba(255,107,53,.28),transparent 65%);z-index:-1;filter:blur(4px)}
-@media(max-width:760px){.hero-spider,.hero-spider.on{width:104px!important;height:104px}}
+@media(max-width:760px){.hero-spider,.hero-spider.on{width:112px!important;height:112px}}
 </style>
 </head>
 <body>
+<div id="loader" role="status" aria-live="polite" aria-label="Loading portfolio"><div class="ld-glow"></div><div class="ld-spider" id="ldSpider"></div><div class="ld-txt">LOADING PORTFOLIO</div><div class="ld-bar"><i></i></div></div>
+<noscript><style>#loader{display:none!important}</style></noscript>
+<script>(function(){var l=document.getElementById('loader');document.documentElement.classList.add('is-loading');
+window.__hideLoader=function(){if(!l)return;l.classList.add('done');document.documentElement.classList.remove('is-loading');setTimeout(function(){if(l&&l.parentNode)l.parentNode.removeChild(l);l=null;},900);};
+setTimeout(function(){if(l&&!l.classList.contains('done'))window.__hideLoader();},9000);})();</script>
 <a class="skip-link" href="#skills">Skip to content</a>
 <button class="to-top" id="toTop" type="button" aria-label="Back to top"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22"/></svg><span aria-hidden="true">&#8593;</span></button>
 <div class="hire-bar" id="hireBar"><a href="tel:+917299619671">Call</a><a class="p" href="mailto:Karthikbalaji7869@gmail.com">Hire me</a></div>
@@ -2767,14 +2787,16 @@ make3D('m3dR','m3dRPrev','m3dRNext','m3dRDots',false);
 </script>
 <script type="module">
 (async function(){
-  var host=document.getElementById('heroSpider'); if(!host) return;
+  var heroHost=document.getElementById('heroSpider'), ldEl=document.getElementById('loader'), host=document.getElementById('ldSpider')||heroHost; if(!host) return;
+  var t0=performance.now(), loading=!!ldEl, loaded=document.readyState==='complete';
+  function done(){ if(!ldEl){ return; } ldEl=null; var el=renderer&&renderer.domElement; if(window.__hideLoader) window.__hideLoader(); setTimeout(function(){ loading=false; if(el&&heroHost){ heroHost.appendChild(el); host=heroHost; size&&size(); requestAnimationFrame(function(){ heroHost.classList.add('on'); }); go&&go(); } },750); }
+  var renderer,size,go;
   try{
-    if(document.readyState!=='complete') await new Promise(function(r){addEventListener('load',r,{once:true});});
     var THREE=await import('three');
     var L=await import('three/addons/loaders/SVGLoader.js'), E=await import('three/addons/environments/RoomEnvironment.js');
     var SVGLoader=L.SVGLoader, RoomEnvironment=E.RoomEnvironment;
     var scene=new THREE.Scene(), camera=new THREE.PerspectiveCamera(32,1,.1,100); camera.position.set(0,0,15.5);
-    var renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
+    renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
     renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.75)); renderer.outputColorSpace=THREE.SRGBColorSpace;
     renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.25; host.appendChild(renderer.domElement);
     var pm=new THREE.PMREMGenerator(renderer), env=new RoomEnvironment(); scene.environment=pm.fromScene(env,.04).texture; env.dispose(); pm.dispose();
@@ -2788,24 +2810,26 @@ make3D('m3dR','m3dRPrev','m3dRNext','m3dRDots',false);
     var c=new THREE.Box3().setFromObject(content).getCenter(new THREE.Vector3()); content.position.sub(c); pivot.rotation.y=-.22;
     scene.add(new THREE.HemisphereLight(0xffffff,0x242b36,1));
     [[0xffffff,3.2,[-4,5,7]],[0x9fc8ff,2.1,[5,1,4]],[0xffa35c,2.4,[0,-4,-5]]].forEach(function(a){ var l=new THREE.DirectionalLight(a[0],a[1]); l.position.set(a[2][0],a[2][1],a[2][2]); scene.add(l); });
-    function size(){ var r=host.getBoundingClientRect(); if(!r.width) return; renderer.setSize(r.width,r.height,false); camera.aspect=r.width/r.height; camera.position.z=r.width<360?17.5:15.5; camera.updateProjectionMatrix(); }
-    new ResizeObserver(size).observe(host); size();
+    size=function(){ var r=host.getBoundingClientRect(); if(!r.width) return; renderer.setSize(r.width,r.height,false); camera.aspect=r.width/r.height; camera.position.z=r.width<360?17.5:15.5; camera.updateProjectionMatrix(); }
+    var ro=new ResizeObserver(size); ro.observe(host); if(heroHost&&heroHost!==host) ro.observe(heroHost); size();
     var tx=0,ty=0,cx=0,cy=0,vis=true,raf=0,last=performance.now();
     addEventListener('pointermove',function(e){ tx=(e.clientX/innerWidth-.5)*2; ty=(e.clientY/innerHeight-.5)*2; },{passive:true});
     function frame(t){
-      raf=0; if(!vis||document.hidden) return;
+      raf=0; if((!vis&&!loading)||document.hidden) return;
       var dt=Math.min((t-last)/1000,.05); last=t;
       if(!window.__calm) pivot.rotation.y+=.65*dt;
       cx+=(tx-cx)*.05; cy+=(ty-cy)*.05; pivot.rotation.x=cy*.28; pivot.position.x=cx*.25;
       renderer.render(scene,camera);
       if(!window.__calm) raf=requestAnimationFrame(frame);
     }
-    function go(){ if(!raf){ last=performance.now(); raf=requestAnimationFrame(frame); } }
+    go=function(){ if(!raf){ last=performance.now(); raf=requestAnimationFrame(frame); } }
     new IntersectionObserver(function(e){ vis=e[0].isIntersecting; if(vis) go(); },{threshold:0}).observe(document.getElementById('hero'));
     document.addEventListener('visibilitychange',go); addEventListener('calmchange',go);
     if(window.__calm) addEventListener('pointermove',function(){ if(!raf) go(); },{passive:true});
     go(); requestAnimationFrame(function(){ host.classList.add('on'); });
-  }catch(err){ console.warn('Spider emblem unavailable:',err); }
+    if(ldEl){ var finish=function(){ var wait=Math.max(0,1600-(performance.now()-t0)); setTimeout(done,wait); };
+      if(document.readyState==='complete') finish(); else addEventListener('load',finish,{once:true}); }
+  }catch(err){ console.warn('Spider emblem unavailable:',err); if(window.__hideLoader) window.__hideLoader(); }
 })();
 </script>
 <script>
