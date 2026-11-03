@@ -1131,9 +1131,52 @@ body.calm .hero-spider-glow{animation:none}
 @media (prefers-reduced-motion:reduce){.hero-spider-glow{animation:none}}
 @media(max-width:760px){.hero-spider{width:min(92vw,420px);top:clamp(330px,44vh,420px)}}
 </style>
+<style id="ux-pass">
+/* UX pass: readable type floor, bigger hit areas, back-to-top, sticky mobile CTA */
+.tool-badge .label,.cs-label,.gear-count,.cap-index,.m3d-num,.m3d-hint,.motion-sub,.accomplishment-org,.cert-d,.lbl,.signature-tag,.frameno,.tag,.nav-cta,.frame-tag,.hero-stats span{font-size:max(12px,1em)}
+.tool-badge .label{font-size:11.5px;letter-spacing:.03em}
+.cs-label,.frame-tag{font-size:11px}
+.topstrip nav a{position:relative}
+.topstrip nav a::after{content:"";position:absolute;inset:-14px -8px}
+.m3d-dot{position:relative}.m3d-dot::after{content:"";position:absolute;inset:-14px -5px}
+.side-dots a{position:relative}.side-dots a::after{content:"";position:absolute;inset:-10px}
+.calm-btn{min-height:44px}
+.scroll-cue{min-height:44px}
+.btn,.cta-row a{min-height:46px}
+.to-top{position:fixed;right:16px;bottom:16px;z-index:900;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(17,17,16,.78);backdrop-filter:blur(10px);color:#fff;font-size:20px;cursor:pointer;display:grid;place-items:center;opacity:0;pointer-events:none;transform:translateY(12px);transition:opacity .3s,transform .3s,background .2s,border-color .2s}
+.to-top.show{opacity:1;pointer-events:auto;transform:none}
+.to-top:hover,.to-top:focus-visible{background:var(--amber);border-color:var(--amber)}
+.to-top svg{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);transform:rotate(-90deg);pointer-events:none}
+.to-top circle{fill:none;stroke:var(--amber);stroke-width:2.5;stroke-dasharray:138.2;stroke-dashoffset:138.2;stroke-linecap:round}
+.hire-bar{display:none}
+@media(max-width:760px){
+  .topstrip nav a{padding:8px 3px}
+  .to-top{bottom:74px}
+  .hire-bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:850;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(180deg,transparent,rgba(17,17,16,.94) 40%);transform:translateY(110%);transition:transform .35s}
+  .hire-bar.show{transform:none}
+  .hire-bar a{flex:1;min-height:46px;display:flex;align-items:center;justify-content:center;border-radius:99px;font-weight:700;font-size:14px;text-decoration:none;border:1px solid rgba(255,255,255,.2);color:#fff;background:rgba(30,29,27,.9)}
+  .hire-bar a.p{background:linear-gradient(180deg,#f0763b,#d4531c);border-color:transparent;color:#fff}
+  .calm-btn{bottom:74px}
+}
+@media (prefers-reduced-motion:reduce){.to-top,.hire-bar{transition:none}}
+</style>
+<style id="clip-fix">
+.sec-title{line-height:1.14!important;padding:.04em .1em .16em 0!important;margin-bottom:calc(36px - .16em)}
+.sec-title.reveal{clip-path:inset(-40% 100% -40% -2%)}
+.sec-title.reveal.in{clip-path:inset(-40% -4% -40% -2%)}
+.contact-title{line-height:1.12!important;padding-bottom:.08em}
+.contact-title span{display:inline-block;padding:0 .1em .14em 0;margin-right:-.1em}
+.hero-stats b,.cap-card h3,.gear-card h3{line-height:1.2;padding-bottom:.06em}
+</style>
+<style id="name-spacing">
+.hero h1{letter-spacing:-.015em!important;font-size:clamp(28px,10.2vw,112px)!important}
+.hero h1 .word{letter-spacing:-.015em}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#skills">Skip to content</a>
+<button class="to-top" id="toTop" type="button" aria-label="Back to top"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22"/></svg><span aria-hidden="true">&#8593;</span></button>
+<div class="hire-bar" id="hireBar"><a href="tel:+917299619671">Call</a><a class="p" href="mailto:Karthikbalaji7869@gmail.com">Hire me</a></div>
 <button class="calm-btn" id="calmBtn" type="button" aria-pressed="false" title="Turn animations off for easier reading"><span aria-hidden="true">&#9680;</span> <span id="calmLbl">Calm mode</span></button>
 
 <div class="letterbox-top"></div>
@@ -2708,6 +2751,18 @@ make3D('m3dR','m3dRPrev','m3dRNext','m3dRDots',false);
     if(window.__calm) addEventListener('pointermove',function(){ if(!raf) go(); },{passive:true});
     go(); requestAnimationFrame(function(){ host.classList.add('on'); });
   }catch(err){ console.warn('Spider emblem unavailable:',err); }
+})();
+</script>
+<script>
+(function(){
+  /* accessible names for side dots */
+  [].forEach.call(document.querySelectorAll('.side-dots a[data-label]'),function(a){ if(!a.getAttribute('aria-label')) a.setAttribute('aria-label','Jump to '+a.getAttribute('data-label')); });
+  var t=document.getElementById('toTop'), bar=document.getElementById('hireBar'), c=t&&t.querySelector('circle'), tick=0;
+  function upd(){ tick=0; var y=scrollY, h=document.documentElement.scrollHeight-innerHeight, show=y>innerHeight*.9;
+    if(t){ t.classList.toggle('show',show); if(c) c.style.strokeDashoffset=(138.2*(1-Math.min(1,y/Math.max(h,1)))).toFixed(1); }
+    if(bar){ var foot=document.getElementById('portfolio'), nearEnd=foot&&foot.getBoundingClientRect().top<innerHeight*.6; bar.classList.toggle('show',y>innerHeight*.7&&!nearEnd); } }
+  addEventListener('scroll',function(){ if(!tick) tick=requestAnimationFrame(upd); },{passive:true}); upd();
+  if(t) t.addEventListener('click',function(){ var r=matchMedia('(prefers-reduced-motion: reduce)').matches; scrollTo({top:0,behavior:r?'auto':'smooth'}); });
 })();
 </script>
 </body>
